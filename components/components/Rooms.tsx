@@ -144,6 +144,13 @@ export default function Rooms() {
           </p>
         </div>
 
+        {/* Search Form Integration */}
+        <div className="mb-12">
+          <div id="block-search">
+            <div id="tl-search-form" className="tl-container"></div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => (
             <div
@@ -222,17 +229,6 @@ export default function Rooms() {
         </div>
       </div>
 
-      {selectedRoom && (
-        <BookingModal
-          isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false);
-            setSelectedRoom(null);
-          }}
-          roomType={selectedRoom.type}
-          pricePerNight={selectedRoom.price}
-        />
-      )}
 
       {fullscreenImage && (
         <div className="fixed inset-0 z-[9999] bg-black/85 flex items-center justify-center p-4 animate-fadeIn">

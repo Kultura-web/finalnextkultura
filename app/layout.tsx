@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/components/Header";
 import Footer from "@/components/components/Footer";
+import TravelLineLoader from "@/components/components/TravellineLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Отель Культура",
-  description: "Отель Культупа в гродно",
+  description: "Отель Культура в Гродно",
 };
 
 export default function RootLayout({
@@ -25,10 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="ru">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Loads TravelLine scripts safely on client */}
+        <TravelLineLoader />
+
         <Header />
         {children}
         <Footer />
