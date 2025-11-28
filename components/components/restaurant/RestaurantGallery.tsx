@@ -29,27 +29,27 @@ export default function RestaurantGallery() {
 
   const images = [
     {
-      url: '/photo_1_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto1.jpg',
       alt: 'Английский завтрак с глазуньей'
     },
     {
-      url: '/photo_8_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto2.jpg',
       alt: 'Брускетты с сёмгой'
     },
     {
-      url: '/photo_16_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto3.jpg',
       alt: 'Салат с мандарином'
     },
     {
-      url: '/photo_23_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto4.jpg',
       alt: 'Говядина с клюквенным соусом'
     },
     {
-      url: '/photo_31_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto5.jpg',
       alt: 'Больше чем шу'
     },
     {
-      url: '/photo_19_2025-10-31_18-24-38.jpg',
+      url: '/NewReso/resto6.jpg',
       alt: 'Рамен с цыпленком'
     }
   ];
