@@ -40,7 +40,7 @@ export default function RestaurantMenu() {
       ref={sectionRef}
       className="relative flex flex-col items-center justify-center bg-fixed bg-cover bg-center text-center py-20 md:py-28"
       style={{
-        backgroundImage: "url('photo_9_2025-10-31_18-24-38.jpg')", // replace with your background
+        backgroundImage: "url('/resto/IMG_20251119_175624_816.jpg')", // replace with your background
         minHeight: "60vh",
       }}
     >
@@ -54,7 +54,7 @@ export default function RestaurantMenu() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Менюy
+            Меню
           </h2>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
