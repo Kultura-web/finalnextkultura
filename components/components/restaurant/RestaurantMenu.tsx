@@ -54,7 +54,7 @@ export default function RestaurantMenu() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Меню
+            Менюy
           </h2>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
