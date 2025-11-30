@@ -40,7 +40,7 @@ export default function RestaurantMenu() {
       ref={sectionRef}
       className="relative flex flex-col items-center justify-center bg-fixed bg-cover bg-center text-center py-20 md:py-28"
       style={{
-        backgroundImage: "url('/resto/IMG_20251119_175624_816.jpg')", // replace with your background
+        backgroundImage: "url('/Resto/IMG_20251119_175624_816.jpg')", // replace with your background
         minHeight: "60vh",
       }}
     >
