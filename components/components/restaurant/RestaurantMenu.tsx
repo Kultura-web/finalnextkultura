@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function RestaurantMenu() {
   const [isVisible, setIsVisible] = useState(false);
@@ -38,14 +39,24 @@ export default function RestaurantMenu() {
     <section
       id="menu"
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center bg-fixed bg-cover bg-center text-center py-20 md:py-28"
+      className="relative flex flex-col items-center justify-center text-center py-20 md:py-28"
       style={{
-        backgroundImage: "url('/Resto/IMG_20251119_175624_816.jpg')", // replace with your background
         minHeight: "60vh",
       }}
     >
       {/* Dark overlay for contrast */}
       <div className="absolute inset-0 bg-black/40" />
+
+      {/* Next.js Image component as the background */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/Resto/IMG_20251119_175624_816.jpg"
+          alt="Restaurant Menu"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+        />
+      </div>
 
       <div className="relative z-10 w-full px-4">
         <div className="max-w-5xl mx-auto">
