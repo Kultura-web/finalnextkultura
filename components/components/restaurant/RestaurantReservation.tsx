@@ -200,38 +200,39 @@ export default function RestaurantReservation() {
                 />
               </div>
 
-              {/* Date & Time */}
-              <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-neutral-900 mb-2">
-                    Дата
-                  </label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
-                    <input
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
-                    />
-                  </div>
-                </div>
+         {/* Date & Time */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium text-neutral-900 mb-2">
+      Дата
+    </label>
+    <div className="relative">
+      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
+      />
+    </div>
+  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-neutral-900 mb-2">
-                    Время
-                  </label>
-                  <div className="relative">
-                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
-                    <input
-                      type="time"
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
-                    />
-                  </div>
-                </div>
-              </div>
+  <div>
+    <label className="block text-sm font-medium text-neutral-900 mb-2">
+      Время
+    </label>
+    <div className="relative">
+      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+      <input
+        type="time"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
+      />
+    </div>
+  </div>
+</div>
+
 
               {/* Guests */}
               <div>
