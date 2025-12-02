@@ -212,7 +212,7 @@ export default function RestaurantReservation() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="w-full max-w-[200px] pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
+        className="w-full max-w-[240px] pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
       />
     </div>
   </div>
@@ -227,7 +227,7 @@ export default function RestaurantReservation() {
         type="time"
         value={time}
         onChange={(e) => setTime(e.target.value)}
-        className="w-full max-w-[80vw] pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
+        className="w-full max-w-[240px] pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
       />
     </div>
   </div>
