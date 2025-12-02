@@ -8,7 +8,7 @@ const rooms = [
   {
     title: 'Делюкс с балконом',
     description: 'Уютный современный номер с выходом на небольшой балкон. Идеален для пары или одного гостя.',
-    price: 'от 120 BYN',
+    price: 'от 450 BYN',
     images: [
       '/Rooms/IMG_20251120_150935_690.jpg',
       '/Rooms/IMG_20251120_150919_870.jpg',
@@ -22,7 +22,7 @@ const rooms = [
   {
     title: 'Представительский люкс с балконом и ванной чашей',
     description: 'Просторный номер с зоной отдыха, балконом и ванной чашей.',
-    price: 'от 180 BYN',
+    price: 'от 500 BYN',
     images: [
       '/Rooms/IMG_20251120_145519_667.jpg',
       '/Rooms/IMG_20251120_145501_634.jpg',
@@ -36,7 +36,7 @@ const rooms = [
   {
     title: 'Делюкс с ванной чашей',
     description: 'Комфортный номер средней площади с отдельной зоной отдыха и ванной чашей.',
-    price: 'от 280 BYN',
+    price: 'от 500 BYN',
     images: [
       '/Rooms/IMG_20251120_145334_889.jpg',
       '/Rooms/IMG_20251120_145338_036.jpg',
@@ -214,15 +214,7 @@ export default function Rooms() {
 
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <span className="text-xl md:text-2xl font-light text-gray-900">{room.price}</span>
-                <button
-                  onClick={() => {
-                    setSelectedRoom({ type: room.title, price: parseInt(room.price.match(/\d+/)?.[0] || '120') });
-                    setIsModalOpen(true);
-                  }}
-                  className="w-full sm:w-auto px-4 md:px-6 py-2 md:py-3 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105 text-sm md:text-base"
-                >
-                  Забронировать
-                </button>
+             
               </div>
             </div>
           ))}

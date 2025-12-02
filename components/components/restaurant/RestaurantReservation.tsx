@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useEffect, useRef, useState } from 'react';
 import { Clock, Users, Calendar, Phone } from 'lucide-react';
@@ -7,24 +7,67 @@ export default function RestaurantReservation() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  // Form state
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [guests, setGuests] = useState('1 гость');
+  const [comment, setComment] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!name || !phone || !date || !time || !guests) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    const reservationData = {
+      name,
+      phone,
+      date,
+      time,
+      guests,
+      comment,
+    };
+
+    try {
+      const response = await fetch('/api/reservation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reservationData),
+      });
+
+      if (response.ok) {
+        alert('Бронирование успешно!');
+        setName('');
+        setPhone('');
+        setDate('');
+        setTime('');
+        setGuests('1 гость');
+        setComment('');
+      } else {
+        alert('Ошибка с бронированием, попробуйте позже');
+      }
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+      alert('There was an error with the submission. Please try again later.');
+    }
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
   }, []);
 
@@ -32,6 +75,8 @@ export default function RestaurantReservation() {
     <section id="reservation" className="py-32 bg-[#e8e5e0]" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+
+          {/* Info column */}
           <div>
             <h2
               className={`text-3xl md:text-5xl font-light text-gray-900 mb-4 transform transition-all duration-1000 ${
@@ -40,8 +85,9 @@ export default function RestaurantReservation() {
             >
               Бронирование
             </h2>
+
             <p
-              className={`text-gray-600 text-lg mt-6 mb-12 transform transition-all duration-1000 ${
+              className={`text-gray-700 text-lg mt-6 mb-12 transform transition-all duration-1000 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: '0.2s' }}
@@ -50,6 +96,8 @@ export default function RestaurantReservation() {
             </p>
 
             <div className="space-y-8">
+
+              {/* Hours */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -61,14 +109,14 @@ export default function RestaurantReservation() {
                 </div>
                 <div>
                   <h4 className="text-sm font-normal text-gray-900 mb-2">ЧАСЫ РАБОТЫ</h4>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    Пн-Чт: 12:00 - 23:00<br />
-                    Пт-Сб: 12:00 - 01:00<br />
-                    Вс: 12:00 - 22:00
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    Вс-Чт: 08:00 — 24:00<br />
+                    Пт-Сб: 08:00 — 01:00
                   </p>
                 </div>
               </div>
 
+              {/* Phone */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -80,12 +128,16 @@ export default function RestaurantReservation() {
                 </div>
                 <div>
                   <h4 className="text-sm font-normal text-gray-900 mb-2">ТЕЛЕФОН</h4>
-                  <a href="tel:+375333428888" className="text-gray-600 text-lg leading-relaxed hover:text-neutral-900 transition-colors">
+                  <a
+                    href="tel:+375333428888"
+                    className="text-gray-700 text-lg leading-relaxed hover:text-neutral-900 transition-colors"
+                  >
                     +375 33 342-88-88
                   </a>
                 </div>
               </div>
 
+              {/* Capacity */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -97,70 +149,102 @@ export default function RestaurantReservation() {
                 </div>
                 <div>
                   <h4 className="text-sm font-normal text-gray-900 mb-2">ВМЕСТИМОСТЬ</h4>
-                  <p className="text-gray-600 text-lg leading-relaxed">
-                    До 60 гостей<br />
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    До 30 гостей<br />
                     Возможность проведения мероприятий
                   </p>
                 </div>
               </div>
+
             </div>
           </div>
 
+          {/* Form column */}
           <div
-            className={`bg-[#e8e5e0] p-10 transform transition-all duration-1000 hover:shadow-2xl ${
+            className={`bg-[#dedbd6] p-10 transform transition-all duration-1000 hover:shadow-2xl ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: '0.5s' }}
           >
-            <h3 className="text-2xl font-light text-gray-900 mb-8">Забронировать столик</h3>
-            <form className="space-y-6">
+            <h3 className="text-2xl font-light text-gray-900 mb-8">
+              Забронировать столик
+            </h3>
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
+
+              {/* Name */}
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Ваше имя</label>
+                <label className="block text-sm font-medium text-neutral-900 mb-2">
+                  Ваше имя
+                </label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300"
                   placeholder="Иван Иванов"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 border border-neutral-400 text-neutral-900 placeholder:text-neutral-500 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
                 />
               </div>
 
+              {/* Phone */}
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Телефон</label>
+                <label className="block text-sm font-medium text-neutral-900 mb-2">
+                  Телефон
+                </label>
                 <input
                   type="tel"
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300"
                   placeholder="+375 33 342-88-88"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full px-4 py-3 border border-neutral-400 text-neutral-900 placeholder:text-neutral-500 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
                 />
               </div>
 
+              {/* Date & Time */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Дата</label>
+                  <label className="block text-sm font-medium text-neutral-900 mb-2">
+                    Дата
+                  </label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                     <input
                       type="date"
-                      className="w-full pl-12 pr-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Время</label>
+                  <label className="block text-sm font-medium text-neutral-900 mb-2">
+                    Время
+                  </label>
                   <div className="relative">
-                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                     <input
                       type="time"
-                      className="w-full pl-12 pr-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
                     />
                   </div>
                 </div>
               </div>
 
+              {/* Guests */}
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Количество гостей</label>
+                <label className="block text-sm font-medium text-neutral-900 mb-2">
+                  Количество гостей
+                </label>
                 <div className="relative">
-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select className="w-full pl-12 pr-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300 appearance-none">
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                  <select
+                    value={guests}
+                    onChange={(e) => setGuests(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300 appearance-none"
+                  >
                     <option>1 гость</option>
                     <option>2 гостя</option>
                     <option>3 гостя</option>
@@ -170,23 +254,31 @@ export default function RestaurantReservation() {
                 </div>
               </div>
 
+              {/* Comment */}
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Комментарий</label>
+                <label className="block text-sm font-medium text-neutral-900 mb-2">
+                  Комментарий
+                </label>
                 <textarea
                   rows={3}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-neutral-700 focus:outline-none transition-colors duration-300 resize-none"
                   placeholder="Особые пожелания или примечания"
-                ></textarea>
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="w-full px-4 py-3 border border-neutral-400 text-neutral-900 placeholder:text-neutral-500 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none resize-none transition-all duration-300"
+                />
               </div>
 
+              {/* Submit */}
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105"
+                className="w-full px-8 py-4 bg-neutral-800 text-white hover:bg-neutral-700 transition-all duration-300 hover:scale-105"
               >
                 Забронировать
               </button>
+
             </form>
           </div>
+
         </div>
       </div>
     </section>
