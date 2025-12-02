@@ -201,7 +201,7 @@ export default function RestaurantReservation() {
               </div>
 
 {/* Date & Time */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[100%]">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[80vw]">
   <div>
     <label className="block text-sm font-medium text-neutral-900 mb-2">
       Дата
