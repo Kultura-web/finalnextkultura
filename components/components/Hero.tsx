@@ -3,7 +3,7 @@ export default function Hero() {
     <section id="home" className="relative h-screen flex items-end overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="https://images.pexels.com/photos/1838554/pexels-photo-1838554.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/Rooms/IMG_20251120_145334_889.jpg"
           alt="Hotel"
           loading="eager"
           fetchPriority="high"
