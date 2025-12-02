@@ -208,12 +208,12 @@ export default function RestaurantReservation() {
     </label>
     <div className="relative">
       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
-      <input
+      {/* <input
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
         className="w-full max-w-[80vw] pl-12 pr-4 py-3 border border-neutral-400 text-neutral-900 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
-      />
+      /> */}
     </div>
   </div>
 
