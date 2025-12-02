@@ -81,7 +81,7 @@ export default function RestaurantReservation() {
             <h2
               className={`text-3xl md:text-5xl font-light text-gray-900 mb-4 transform transition-all duration-1000 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              } form-container` }
+              }` }
             >
               Бронирование
             </h2>
@@ -201,7 +201,7 @@ export default function RestaurantReservation() {
               </div>
 
 {/* Date & Time */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[100%]">
   <div>
     <label className="block text-sm font-medium text-neutral-900 mb-2">
       Дата
