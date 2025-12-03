@@ -76,7 +76,7 @@ export default function About() {
             >
               <a
                 href="#rooms"
-                className="inline-block w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-4 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105 text-sm md:text-base"
+                className="inline-block w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-4 bg-[#E39E14] text-black hover:bg-[#E39E14] transition-all duration-300 hover:scale-105 text-sm md:text-base"
               >
                 Забронировать
               </a>

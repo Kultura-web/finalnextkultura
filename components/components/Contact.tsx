@@ -59,8 +59,8 @@ export default function Contact() {
                 }`}
                 style={{ transitionDelay: '0.6s' }}
               >
-                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-neutral-700 group-hover:scale-110 transition-all duration-300">
-                  <MapPin className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
+                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-[#E39E14] group-hover:border-[#E39E14] group-hover:scale-110 transition-all duration-300">
+                  <MapPin className="w-5 h-5 text-amber-600 group-hover:text-black transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">АДРЕС</h4>
@@ -77,8 +77,8 @@ export default function Contact() {
                 }`}
                 style={{ transitionDelay: '0.8s' }}
               >
-                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-neutral-700 group-hover:scale-110 transition-all duration-300">
-                  <Phone className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
+                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-[#E39E14] group-hover:border-[#E39E14]  group-hover:scale-110 transition-all duration-300">
+                  <Phone className="w-5 h-5 text-amber-600 group-hover:text-black transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">ТЕЛЕФОН</h4>
@@ -97,8 +97,8 @@ export default function Contact() {
                 }`}
                 style={{ transitionDelay: '1s' }}
               >
-                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-neutral-700 group-hover:scale-110 transition-all duration-300">
-                  <Instagram className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
+                <div className="w-12 h-12 border border-neutral-700 flex items-center justify-center flex-shrink-0 group-hover:bg-[#E39E14] group-hover:border-[#E39E14]  group-hover:scale-110 transition-all duration-300">
+                  <Instagram className="w-5 h-5 text-amber-600 group-hover:text-black transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">INSTAGRAM</h4>

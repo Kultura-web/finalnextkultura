@@ -22,7 +22,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#rooms"
-            className="px-6 sm:px-8 py-3 sm:py-4 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105 text-center text-sm sm:text-base"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-[#E39E14] text-gray-900 hover:bg-[#E39E14] transition-all duration-300 hover:scale-105 text-center text-sm sm:text-base font-medium"
           >
             Забронировать
           </a>

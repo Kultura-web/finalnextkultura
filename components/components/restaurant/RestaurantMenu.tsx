@@ -31,8 +31,10 @@ export default function RestaurantMenu() {
   const handleDownload = (fileName: string) => {
     const link = document.createElement("a");
     link.href = fileName;
-    link.download = fileName.split("/").pop() || "menu.jpg";
+    link.target = "_blank"; // Opens in a new tab/window
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -70,21 +72,21 @@ export default function RestaurantMenu() {
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
-              onClick={() => handleDownload("/Menu3.jpg")}
+              onClick={() => handleDownload("/Menu3.pdf")}
               className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
             >
               Основное меню
             </button>
 
             <button
-              onClick={() => handleDownload("/Menu2.jpg")}
+              onClick={() => handleDownload("/Menu2.pdf")}
               className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
             >
               Детское меню
             </button>
 
             <button
-              onClick={() => handleDownload("/Menu1.jpg")}
+              onClick={() => handleDownload("/Menu1.pdf")}
               className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
             >
               Напитки

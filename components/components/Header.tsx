@@ -65,7 +65,7 @@ export default function Header() {
   );
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200 transform transition-all duration-500">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-sm border- border-neutral-200 transform transition-all duration-500">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-4 md:gap-8">
@@ -146,7 +146,7 @@ export default function Header() {
             {!isRestaurant && (
               <button
                 onClick={() => scrollToSection('rooms')}
-                className="px-6 py-2 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105"
+                className="px-6 py-2 bg-[#E39E14] text-black hover:bg-[#E39E14] transition-all duration-300 hover:scale-105"
               >
                 Забронировать
               </button>

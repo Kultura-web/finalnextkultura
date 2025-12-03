@@ -32,7 +32,7 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-normal mb-4">СОЦИАЛЬНЫЕ СЕТИ</h4>
             <div className="flex gap-4">
-              <a href="https://www.instagram.com/boutique_hotel_kultura" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/boutique_hotel_kultura" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E39E14] transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
