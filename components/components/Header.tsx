@@ -146,7 +146,7 @@ export default function Header() {
             {!isRestaurant && (
               <button
                 onClick={() => scrollToSection('rooms')}
-                className="px-6 py-2 bg-[#E39E14] text-black hover:bg-[#E39E14] transition-all duration-300 hover:scale-105"
+                className="px-6 py-2 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105"
               >
                 Забронировать
               </button>
