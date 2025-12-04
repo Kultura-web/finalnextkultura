@@ -23,8 +23,31 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/boutique_hotel_kultura" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a href="https://www.instagram.com/boutique_hotel_kultura  " target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   @boutique_hotel_kultura
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-sm font-normal mb-4">Информация</h4>
+            <ul className="space-y-2 text-gray-400 text-sm">
+              <li>
+                <a
+                  href="/documents/pravila_prozhivaniya_v_otele.docx"
+                  download="Правила Проживания в отеле.docx"
+                  className="hover:text-white transition-colors"
+                >
+                  Правила Проживания в отеле
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/document/Contract.docx"
+                  download="Публичный договор.docx"
+                  className="hover:text-white transition-colors"
+                >
+                  Публичный договор
                 </a>
               </li>
             </ul>
@@ -33,7 +56,7 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-normal mb-4">СОЦИАЛЬНЫЕ СЕТИ</h4>
             <div className="flex gap-4">
-              <a href="https://www.instagram.com/boutique_hotel_kultura" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#c8aa57] transition-colors">
+              <a href="https://www.instagram.com/boutique_hotel_kultura  " target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#c8aa57] transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -44,7 +67,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-neutral-700 text-center">
           <p className="text-gray-400 text-sm">
-            © 2025 Отель Культура. Все права защищены.
+             2025 ООО «Культура гостеприимства». УНП 591 006 629. Все права защищены.
           </p>
         </div>
       </div>
