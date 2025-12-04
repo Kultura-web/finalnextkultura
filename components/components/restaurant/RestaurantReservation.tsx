@@ -132,7 +132,7 @@ export default function RestaurantReservation() {
                     href="tel:+375333428888"
                     className="text-gray-700 text-lg leading-relaxed hover:text-neutral-900 transition-colors"
                   >
-                    +375 33 342-88-88
+                    +375 33 388-54-54
                   </a>
                 </div>
               </div>

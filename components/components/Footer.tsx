@@ -1,4 +1,4 @@
-import { Instagram } from 'lucide-react';
+import { Instagram, Send } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer() {
@@ -9,7 +9,8 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-light mb-4">ОТЕЛЬ КУЛЬТУРА</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Уединённое место для побега из шумных мегаполисов
+            ООО «Культура гостеприимства» Республика Беларусь г.Гродно, ул. Советская, Д. 3 УНП 591 006 629
+            Свидетельство о государственной регистрации №591006629, выдано Гродненским областным исполнительным комитетом 06.02.2023
             </p>
           </div>
 
@@ -24,7 +25,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="https://www.instagram.com/boutique_hotel_kultura  " target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  @boutique_hotel_kultura
+                @kultura.cafe.grodno
                 </a>
               </li>
             </ul>
@@ -56,14 +57,17 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-normal mb-4">СОЦИАЛЬНЫЕ СЕТИ</h4>
             <div className="flex gap-4">
-              <a href="https://www.instagram.com/boutique_hotel_kultura  " target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#c8aa57] transition-colors">
+              <a href="https://www.instagram.com/@kultura.cafe.grodno  " target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#c8aa57] transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
+              {/* <a href="https://www.instagram.com/@kultura.cafe.grodno  " target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#c8aa57] transition-colors">
+              <Send className='size-5' />
+              </a> */}
             </div>
           </div>
         </div>
 
-        <Image src="/logos/White/HORIZONTAL WHITE.png" alt="logos" width={1000} height={1000} />
+        <Image src="/logos/White/HORIZONTAL WHITE.png" alt="logos" width={1000} height={200} />
 
         <div className="pt-8 border-t border-neutral-700 text-center">
           <p className="text-gray-400 text-sm">
