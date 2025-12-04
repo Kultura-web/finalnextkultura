@@ -4,6 +4,7 @@ import { Menu, X, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -69,7 +70,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-4 md:gap-8">
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="flex-shrink-0 flex flex-row items-center gap-3">
+              <Image
+              src="/logo.jpg"
+               alt="logo"
+               width={80}
+               height={80}
+               />
               <h1 className="text-lg md:text-2xl font-light text-gray-900 hover:text-neutral-600 transition-colors duration-300">
                 ОТЕЛЬ КУЛЬТУРА
               </h1>
@@ -154,7 +161,7 @@ export default function Header() {
             {isRestaurant && (
               <button
                 onClick={() => scrollToSection('reservation')}
-                className="px-6 py-2 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105"
+                className="px-6 py-2 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105"
               >
                 Забронировать столик
               </button>

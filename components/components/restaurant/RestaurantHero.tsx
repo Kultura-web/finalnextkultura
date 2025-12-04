@@ -24,7 +24,7 @@ export default function RestaurantHero() {
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#reservation"
-            className="px-6 sm:px-8 py-3 sm:py-4 bg-neutral-700 text-white hover:bg-neutral-600 transition-all duration-300 hover:scale-105 text-center text-sm sm:text-base"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105 text-center text-sm sm:text-base"
           >
             Забронировать столик
           </a>

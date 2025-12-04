@@ -193,7 +193,7 @@ export default function RestaurantReservation() {
                 </label>
                 <input
                   type="tel"
-                  placeholder="+375 33 342-88-88"
+                  placeholder="+375 33 388-54-54"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full px-4 py-3 border border-neutral-400 text-neutral-900 placeholder:text-neutral-500 bg-white focus:border-neutral-800 focus:ring-2 focus:ring-neutral-800/20 focus:outline-none transition-all duration-300"
@@ -273,7 +273,7 @@ export default function RestaurantReservation() {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full px-8 py-4 bg-neutral-800 text-white hover:bg-neutral-700 transition-all duration-300 hover:scale-105"
+                className="w-full px-8 py-4 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105"
               >
                 Забронировать
               </button>

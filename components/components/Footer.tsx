@@ -1,4 +1,5 @@
 import { Instagram } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -38,6 +39,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        <Image src="/logos/White/HORIZONTAL WHITE.png" alt="logos" width={1000} height={1000} />
 
         <div className="pt-8 border-t border-neutral-700 text-center">
           <p className="text-gray-400 text-sm">

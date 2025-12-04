@@ -91,8 +91,8 @@ export default function RestaurantAbout() {
               }`}
               style={{ transitionDelay: `${0.6 + index * 0.2}s` }}
             >
-              <div className="w-20 h-20 mx-auto mb-6 border border-neutral-700 flex items-center justify-center hover:bg-neutral-700 group transition-all duration-300">
-                <feature.icon className="w-10 h-10 text-neutral-700 group-hover:text-white transition-colors duration-300" />
+              <div className="w-20 h-20 mx-auto mb-6 border border-neutral-700 flex items-center justify-center hover:border-[#c8aa57] hover:bg-[#c8aa57] group transition-all duration-300">
+                <feature.icon className="w-10 h-10 text-[#c8aa57] group-hover:text-black transition-colors duration-300" />
               </div>
               <h3 className="text-xl font-light text-gray-900 mb-4">{feature.title}</h3>
               <p className="text-gray-600 leading-relaxed">{feature.description}</p>

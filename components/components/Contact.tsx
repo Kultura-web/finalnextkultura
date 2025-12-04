@@ -103,7 +103,7 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">INSTAGRAM</h4>
                   <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                    @boutique_hotel_kultura
+                    @kultura.cafe.grodno
                   </p>
                 </div>
               </a>
