@@ -1,5 +1,6 @@
 import { Instagram, Send } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -34,22 +35,20 @@ export default function Footer() {
             <h4 className="text-sm font-normal mb-4">Информация</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>
-                <a
-                  href="/documents/pravila_prozhivaniya_v_otele.docx"
-                  download="Правила Проживания в отеле.docx"
+              <Link
+                  href="/rules"
                   className="hover:text-white transition-colors"
                 >
                   Правила Проживания в отеле
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/document/Contract.docx"
-                  download="Публичный договор.docx"
+                <Link
+                  href="/contract"
                   className="hover:text-white transition-colors"
                 >
                   Публичный договор
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

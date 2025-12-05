@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 import BookingModal from './BookingModal';
 
 const rooms = [
@@ -73,53 +72,32 @@ export default function Rooms() {
     };
   }, []);
 
-  const animateImageChange = (cardIndex: number, targetIndex: number) => {
-    const img = imageRefs.current[cardIndex];
-    if (!img) {
-      setCurrentImageIndexes(prev => {
-        const copy = [...prev];
-        copy[cardIndex] = targetIndex;
-        return copy;
-      });
-      return;
-    }
-
-    gsap.killTweensOf(img);
-    gsap.to(img, {
-      opacity: 0,
-      scale: 0.98,
-      duration: 0.18,
-      ease: 'power1.in',
-      onComplete: () => {
-        setCurrentImageIndexes(prev => {
-          const copy = [...prev];
-          copy[cardIndex] = targetIndex;
-          return copy;
-        });
-
-        requestAnimationFrame(() => {
-          gsap.fromTo(
-            img,
-            { opacity: 0, scale: 1.02 },
-            { opacity: 1, scale: 1, duration: 0.45, ease: 'power2.out' }
-          );
-        });
-      }
-    });
-  };
-
   const goPrev = (cardIndex: number) => {
     const len = rooms[cardIndex].images.length;
-    animateImageChange(cardIndex, (currentImageIndexes[cardIndex] - 1 + len) % len);
+    setCurrentImageIndexes(prev => {
+      const copy = [...prev];
+      copy[cardIndex] = (currentImageIndexes[cardIndex] - 1 + len) % len;
+      return copy;
+    });
   };
 
   const goNext = (cardIndex: number) => {
     const len = rooms[cardIndex].images.length;
-    animateImageChange(cardIndex, (currentImageIndexes[cardIndex] + 1) % len);
+    setCurrentImageIndexes(prev => {
+      const copy = [...prev];
+      copy[cardIndex] = (currentImageIndexes[cardIndex] + 1) % len;
+      return copy;
+    });
   };
 
   const jumpTo = (cardIndex: number, imgIndex: number) => {
-    if (imgIndex !== currentImageIndexes[cardIndex]) animateImageChange(cardIndex, imgIndex);
+    if (imgIndex !== currentImageIndexes[cardIndex]) {
+      setCurrentImageIndexes(prev => {
+        const copy = [...prev];
+        copy[cardIndex] = imgIndex;
+        return copy;
+      });
+    }
   };
 
   return (
@@ -214,13 +192,11 @@ export default function Rooms() {
 
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <span className="text-xl md:text-2xl font-light text-gray-900">{room.price}</span>
-             
               </div>
             </div>
           ))}
         </div>
       </div>
-
 
       {fullscreenImage && (
         <div className="fixed inset-0 z-[9999] bg-black/85 flex items-center justify-center p-4 animate-fadeIn">
