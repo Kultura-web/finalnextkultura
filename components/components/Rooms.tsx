@@ -143,7 +143,7 @@ export default function Rooms() {
                   ref={el => { imageRefs.current[index] = el; }}
                   src={room.images[currentImageIndexes[index]]}
                   alt={`${room.title} ${currentImageIndexes[index] + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110 cursor-pointer"
+                  className="w-full h-full object-cover group-hover:scale-110 cursor-pointer"
                   onClick={() => setFullscreenImage(room.images[currentImageIndexes[index]])}
                 />
 
