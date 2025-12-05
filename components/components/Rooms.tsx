@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
 
 const rooms = [
@@ -47,13 +47,10 @@ const rooms = [
 
 export default function Rooms() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<{ type: string; price: number } | null>(null);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(() => rooms.map(() => 0));
-  const imageRefs = useRef<Array<HTMLImageElement | null>>(rooms.map(() => null));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,7 +73,7 @@ export default function Rooms() {
     const len = rooms[cardIndex].images.length;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
-      copy[cardIndex] = (currentImageIndexes[cardIndex] - 1 + len) % len;
+      copy[cardIndex] = (copy[cardIndex] - 1 + len) % len;
       return copy;
     });
   };
@@ -85,19 +82,17 @@ export default function Rooms() {
     const len = rooms[cardIndex].images.length;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
-      copy[cardIndex] = (currentImageIndexes[cardIndex] + 1) % len;
+      copy[cardIndex] = (copy[cardIndex] + 1) % len;
       return copy;
     });
   };
 
   const jumpTo = (cardIndex: number, imgIndex: number) => {
-    if (imgIndex !== currentImageIndexes[cardIndex]) {
-      setCurrentImageIndexes(prev => {
-        const copy = [...prev];
-        copy[cardIndex] = imgIndex;
-        return copy;
-      });
-    }
+    setCurrentImageIndexes(prev => {
+      const copy = [...prev];
+      copy[cardIndex] = imgIndex;
+      return copy;
+    });
   };
 
   return (
@@ -122,13 +117,6 @@ export default function Rooms() {
           </p>
         </div>
 
-        {/* Search Form Integration */}
-        <div className="mb-12">
-          <div id="block-search">
-            <div id="tl-search-form" className="tl-container"></div>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => (
             <div
@@ -140,10 +128,9 @@ export default function Rooms() {
             >
               <div className="relative h-[300px] md:h-[500px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                 <img
-                  ref={el => { imageRefs.current[index] = el; }}
                   src={room.images[currentImageIndexes[index]]}
                   alt={`${room.title} ${currentImageIndexes[index] + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 cursor-pointer"
+                  className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
                   onClick={() => setFullscreenImage(room.images[currentImageIndexes[index]])}
                 />
 
