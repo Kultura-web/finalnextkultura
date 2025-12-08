@@ -1,48 +1,34 @@
 import { Eye } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+
+interface GalleryImage {
+  id: string;
+  image_path: string;
+  title: string;
+  span_cols: number;
+  span_rows: number;
+  display_order: number;
+}
 
 export default function Gallery() {
-  const images = [
-    {
-      url: '/photo_12_2025-10-31_18-24-38.jpg',
-      title: 'Интерьер номера',
-      span: 'col-span-2 row-span-2'
-    },
-    {
-      url: '/photo_13_2025-10-31_18-24-38.jpg',
-      title: 'Ресторан',
-      span: 'col-span-1 row-span-1'
-    },
-    {
-      url: '/photo_14_2025-10-31_18-24-38.jpg',
-      title: 'Лобби',
-      span: 'col-span-1 row-span-1'
-    },
-    {
-      url: '/photo_15_2025-10-31_18-24-38.jpg',
-      title: 'Спа-зона',
-      span: 'col-span-1 row-span-1'
-    },
-    {
-      url: '/photo_16_2025-10-31_18-24-38.jpg',
-      title: 'Панорамный вид',
-      span: 'col-span-1 row-span-1'
-    },
-    {
-      url: '/photo_17_2025-10-31_18-24-38.jpg',
-      title: 'Фасад отеля',
-      span: 'col-span-2 row-span-1'
-    },
-    {
-      url: '/photo_18_2025-10-31_18-24-38.jpg',
-      title: 'Спа-процедуры',
-      span: 'col-span-1 row-span-1'
-    },
-    {
-      url: '/photo_19_2025-10-31_18-24-38.jpg',
-      title: 'Фитнес-центр',
-      span: 'col-span-1 row-span-1'
-    }
-  ];
+  const [images, setImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const { data } = await supabase
+          .from('gallery_images')
+          .select('*')
+          .order('display_order');
+        if (data) setImages(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchGallery();
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-[#e8e5e0]">
@@ -58,14 +44,16 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 auto-rows-[150px] md:auto-rows-[200px]">
-          {images.map((image, index) => (
+          {images.map((image, index) => {
+            const spanClass = `col-span-${image.span_cols} row-span-${image.span_rows}`;
+            return (
             <div
-              key={index}
-              className={`${image.span} relative overflow-hidden group cursor-pointer animate-fade-in`}
+              key={image.id}
+              className={`col-span-${image.span_cols} row-span-${image.span_rows} relative overflow-hidden group cursor-pointer animate-fade-in`}
               style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animation: `fadeIn 0.8s ease-out ${index * 0.1}s forwards` }}
             >
               <img
-                src={image.url}
+                src={image.image_path}
                 alt={image.title}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75 brightness-90"
               />
@@ -83,7 +71,8 @@ export default function Gallery() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="text-center mt-8 md:mt-12">

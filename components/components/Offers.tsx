@@ -2,35 +2,46 @@
 
 import { useEffect, useRef, useState } from 'react';
 import BookingModal from './BookingModal';
+import { supabase } from '@/lib/supabase';
 
-const offers = [
-  {
-    title: 'Утро невесты в самом сердце Гродно',
-    description: 'Продуманный интерьер и великолепный вид с лоджии сделает ваш особенный день незабываемым',
-    images: [
-      '/Offers/Offer1.jpg',
-      '/Offers/Offer2.jpg',
-      '/Offers/Offer3.jpg',
-      '/Offers/Offer4.jpg',
-     ], // Single image
-    discount: 15
-  },
-  {
-    title: 'Культурная программа',
-    description: 'Скидка 10% на проживание с посещением лучших достопримечательностей города',
-    images: [
-      '/Resto/IMG_20251119_175605_550.jpg',
-    ],
-    discount: 10
-  }
-];
+interface OfferImage {
+  id: string;
+  image_path: string;
+  display_order: number;
+}
+
+interface OfferData {
+  id: string;
+  title: string;
+  description: string;
+  discount: number;
+  display_order: number;
+  offer_images?: OfferImage[];
+}
 
 export default function Offers() {
+  const [offers, setOffers] = useState<OfferData[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState<{ title: string; discount: number } | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({});
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const { data } = await supabase
+          .from('offers')
+          .select('*, offer_images(*)')
+          .order('display_order');
+        if (data) setOffers(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchOffers();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,17 +65,19 @@ export default function Offers() {
   }, []);
 
   const goToPreviousImage = (offerIndex: number) => {
-    if (!offers[offerIndex].images) return;
+    const images = offers[offerIndex]?.offer_images?.map(img => img.image_path) || [];
+    if (!images.length) return;
     const currentIndex = currentImageIndex[offerIndex] || 0;
-    const maxIndex = offers[offerIndex].images.length - 1;
+    const maxIndex = images.length - 1;
     const newIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
     setCurrentImageIndex(prev => ({ ...prev, [offerIndex]: newIndex }));
   };
 
   const goToNextImage = (offerIndex: number) => {
-    if (!offers[offerIndex].images) return;
+    const images = offers[offerIndex]?.offer_images?.map(img => img.image_path) || [];
+    if (!images.length) return;
     const currentIndex = currentImageIndex[offerIndex] || 0;
-    const maxIndex = offers[offerIndex].images.length - 1;
+    const maxIndex = images.length - 1;
     const newIndex = currentIndex === maxIndex ? 0 : currentIndex + 1;
     setCurrentImageIndex(prev => ({ ...prev, [offerIndex]: newIndex }));
   };
@@ -97,15 +110,13 @@ export default function Offers() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {offers.map((offer, index) => {
-            const imageCount = offer.images?.length || 0;
-            const showMultipleImages = imageCount > 1;
-            const currentImage = showMultipleImages 
-              ? offer.images[currentImageIndex[index] || 0] 
-              : offer.images[0];
-            
+            const images = offer.offer_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
+            const showMultipleImages = images.length > 1;
+            const currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
+
             return (
               <div
-                key={index}
+                key={offer.id}
                 className={`group transform transition-all duration-1000 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
@@ -119,8 +130,7 @@ export default function Offers() {
                   />
                   <div className="absolute inset-0 bg-black/15"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent transition-opacity duration-500"></div>
-                  
-                  {/* Navigation buttons for multiple images */}
+
                   {showMultipleImages && (
                     <>
                       <button
@@ -159,7 +169,7 @@ export default function Offers() {
                 </button>
               </div>
             );
-          })}
+            })}
         </div>
       </div>
     
