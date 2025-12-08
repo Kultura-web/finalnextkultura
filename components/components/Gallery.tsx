@@ -1,6 +1,6 @@
 import { Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface GalleryImage {
   id: string;
@@ -11,8 +11,15 @@ interface GalleryImage {
   display_order: number;
 }
 
+const defaultGalleryImages: GalleryImage[] = [
+  { id: '1', image_path: '/photo_1_2025-10-31_18-24-38.jpg', title: 'Вестибюль', span_cols: 1, span_rows: 1, display_order: 1 },
+  { id: '2', image_path: '/photo_2_2025-10-31_18-24-38.jpg', title: 'Номер', span_cols: 2, span_rows: 2, display_order: 2 },
+  { id: '3', image_path: '/photo_3_2025-10-31_18-24-38.jpg', title: 'Ресторан', span_cols: 1, span_rows: 1, display_order: 3 },
+  { id: '4', image_path: '/photo_4_2025-10-31_18-24-38.jpg', title: 'Вид', span_cols: 1, span_rows: 1, display_order: 4 },
+];
+
 export default function Gallery() {
-  const [images, setImages] = useState<GalleryImage[]>([]);
+  const [images, setImages] = useState<GalleryImage[]>(defaultGalleryImages);
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -45,7 +52,9 @@ export default function Gallery() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 auto-rows-[150px] md:auto-rows-[200px]">
           {images.map((image, index) => {
-            const spanClass = `col-span-${image.span_cols} row-span-${image.span_rows}`;
+            const imageUrl = image.image_path.startsWith('/cms-images/')
+              ? getPublicImageUrl(image.image_path, 'cms-images')
+              : image.image_path;
             return (
             <div
               key={image.id}
@@ -53,7 +62,7 @@ export default function Gallery() {
               style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animation: `fadeIn 0.8s ease-out ${index * 0.1}s forwards` }}
             >
               <img
-                src={image.image_path}
+                src={imageUrl}
                 alt={image.title}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75 brightness-90"
               />

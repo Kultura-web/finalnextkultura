@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface AboutData {
   title: string;
@@ -12,9 +12,18 @@ interface AboutData {
   button_text: string;
 }
 
+const defaultAbout: AboutData = {
+  title: 'Что такое Отель Культура?',
+  paragraph_1: 'Бутик Отель "Культура" — особое место в самом центре города Гродно, сочетающее старину здания 1860-х годов и современный уют. Окна выходят на главную пешеходную улицу, а с балконов открывается перспектива на площадь.',
+  paragraph_2: 'Просторные номера со всеми условиями созданы для отдыха. В отеле с самого утра работает кафе с сытной и интересной кухней, напитками и десертами.',
+  paragraph_3: 'В шаговой доступности — все главные достопримечательности города.',
+  image_path: 'grodno.jpg',
+  button_text: 'Забронировать',
+};
+
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
-  const [about, setAbout] = useState<AboutData | null>(null);
+  const [about, setAbout] = useState<AboutData>(defaultAbout);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,79 +63,79 @@ export default function About() {
     };
   }, []);
 
+  const getImageUrl = () => {
+    return getPublicImageUrl(about.image_path, 'cms-images');
+  };
+
   return (
     <section id="about" className="py-16 md:py-32 bg-[#e8e5e0]" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-4 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-20 items-start">
-          {about && (
-            <>
-              <div>
-                <h2
-                  className={`text-2xl md:text-5xl font-light text-gray-900 mb-8 md:mb-12 leading-tight transform transition-all duration-1000 ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{ transitionDelay: '0.2s' }}
-                >
-                  {about.title}
-                </h2>
-                <div className="space-y-6 md:space-y-8 text-gray-700 leading-relaxed text-base md:text-lg">
-                  <p
-                    className={`transform transition-all duration-1000 ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                    }`}
-                    style={{ transitionDelay: '0.4s' }}
-                  >
-                    {about.paragraph_1}
-                  </p>
-                  <p
-                    className={`transform transition-all duration-1000 ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                    }`}
-                    style={{ transitionDelay: '0.8s' }}
-                  >
-                    {about.paragraph_2}
-                  </p>
-                  <p
-                    className={`transform transition-all duration-1000 ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                    }`}
-                    style={{ transitionDelay: '1s' }}
-                  >
-                    {about.paragraph_3}
-                  </p>
-                </div>
-                <div
-                  className={`mt-8 md:mt-12 transform transition-all duration-1000 ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{ transitionDelay: '1.2s' }}
-                >
-                  <a
-                    href="#rooms"
-                    className="inline-block w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-4 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105 text-sm md:text-base"
-                  >
-                    {about.button_text}
-                  </a>
-                </div>
-              </div>
-
-              <div
-                className={`space-y-8 transform transition-all duration-1000 ${
+          <div>
+            <h2
+              className={`text-2xl md:text-5xl font-light text-gray-900 mb-8 md:mb-12 leading-tight transform transition-all duration-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '0.2s' }}
+            >
+              {about.title}
+            </h2>
+            <div className="space-y-6 md:space-y-8 text-gray-700 leading-relaxed text-base md:text-lg">
+              <p
+                className={`transform transition-all duration-1000 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
-                style={{ transitionDelay: '0.3s' }}
+                style={{ transitionDelay: '0.4s' }}
               >
-                <div className="w-full h-[300px] md:h-[600px] overflow-hidden transform hover:shadow-2xl transition-all duration-500 relative">
-                  <img
-                    src={about.image_path}
-                    alt="Hotel Spa"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]"
-                  />
-                  <div className="absolute inset-0 bg-black/15 pointer-events-none"></div>
-                </div>
-              </div>
-            </>
-          )}
+                {about.paragraph_1}
+              </p>
+              <p
+                className={`transform transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: '0.8s' }}
+              >
+                {about.paragraph_2}
+              </p>
+              <p
+                className={`transform transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: '1s' }}
+              >
+                {about.paragraph_3}
+              </p>
+            </div>
+            <div
+              className={`mt-8 md:mt-12 transform transition-all duration-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '1.2s' }}
+            >
+              <a
+                href="#rooms"
+                className="inline-block w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-4 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105 text-sm md:text-base"
+              >
+                {about.button_text}
+              </a>
+            </div>
+          </div>
+
+          <div
+            className={`space-y-8 transform transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionDelay: '0.3s' }}
+          >
+            <div className="w-full h-[300px] md:h-[600px] overflow-hidden transform hover:shadow-2xl transition-all duration-500 relative">
+              <img
+                src={getImageUrl()}
+                alt="Hotel Spa"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]"
+              />
+              <div className="absolute inset-0 bg-black/15 pointer-events-none"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

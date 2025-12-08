@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface RoomImage {
   id: string;
@@ -20,13 +20,32 @@ interface RoomData {
   room_images?: RoomImage[];
 }
 
+const defaultRooms: RoomData[] = [
+  {
+    id: '1',
+    title: 'Делюкс с балконом',
+    description: 'Уютный современный номер с выходом на небольшой балкон. Идеален для пары или одного гостя.',
+    price: 'от 450 BYN',
+    features: ['44 м²', 'Двуспальная кровать', 'Рабочая зона', 'Wi‑Fi', 'Небольшой балкон'],
+    display_order: 1,
+  },
+  {
+    id: '2',
+    title: 'Представительский люкс с балконом и ванной чашей',
+    description: 'Просторный номер с зоной отдыха, балконом и ванной чашей.',
+    price: 'от 500 BYN',
+    features: ['38 м²', 'Зона отдыха', 'Балкон', 'Ванная чаша'],
+    display_order: 2,
+  },
+];
+
 export default function Rooms() {
-  const [rooms, setRooms] = useState<RoomData[]>([]);
+  const [rooms, setRooms] = useState<RoomData[]>(defaultRooms);
   const [isVisible, setIsVisible] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>([]);
+  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(defaultRooms.map(() => 0));
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -123,7 +142,10 @@ export default function Rooms() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => {
             const images = room.room_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
-            const currentImage = images[currentImageIndexes[index]] || '/Rooms/IMG_20251120_145334_889.jpg';
+            let currentImage = images[currentImageIndexes[index]] || '/Rooms/IMG_20251120_145334_889.jpg';
+            if (currentImage.startsWith('/cms-images/')) {
+              currentImage = getPublicImageUrl(currentImage, 'cms-images');
+            }
 
             return (
             <div

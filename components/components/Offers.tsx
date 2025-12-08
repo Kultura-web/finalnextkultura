@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import BookingModal from './BookingModal';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface OfferImage {
   id: string;
@@ -19,8 +19,10 @@ interface OfferData {
   offer_images?: OfferImage[];
 }
 
+const defaultOffers: OfferData[] = [];
+
 export default function Offers() {
-  const [offers, setOffers] = useState<OfferData[]>([]);
+  const [offers, setOffers] = useState<OfferData[]>(defaultOffers);
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState<{ title: string; discount: number } | null>(null);
@@ -112,7 +114,10 @@ export default function Offers() {
           {offers.map((offer, index) => {
             const images = offer.offer_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
             const showMultipleImages = images.length > 1;
-            const currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
+            let currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
+            if (currentImage.startsWith('/cms-images/')) {
+              currentImage = getPublicImageUrl(currentImage, 'cms-images');
+            }
 
             return (
               <div
