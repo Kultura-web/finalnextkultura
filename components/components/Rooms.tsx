@@ -117,6 +117,12 @@ export default function Rooms() {
           </p>
         </div>
 
+        <div className="mb-12">
+          <div id="block-search">
+            <div id="tl-search-form" className="tl-container"></div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => (
             <div
