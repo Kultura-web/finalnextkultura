@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { uploadImage } from '@/lib/supabase';
+import { uploadImage, getPublicImageUrl } from '@/lib/supabase';
 import { Upload } from 'lucide-react';
 
 interface ImageUploadProps {
@@ -33,11 +33,16 @@ export default function ImageUpload({ onImageUpload, bucket = 'cms-images', prev
     }
   };
 
+  const getImageUrl = () => {
+    if (!preview) return '';
+    return getPublicImageUrl(preview, bucket);
+  };
+
   return (
     <div className="space-y-4">
       {preview && (
         <div className="w-full h-48 bg-gray-100 rounded overflow-hidden">
-          <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+          <img src={getImageUrl()} alt="Preview" className="w-full h-full object-cover" />
         </div>
       )}
       <div
