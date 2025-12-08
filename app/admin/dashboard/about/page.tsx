@@ -89,54 +89,54 @@ export default function AboutDashboard() {
 
         <div className="bg-white rounded-lg shadow p-6 space-y-6">
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Заголовок</label>
+            <label className="block text-gray-900 font-medium mb-2">Заголовок</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Первый параграф</label>
+            <label className="block text-gray-900 font-medium mb-2">Первый параграф</label>
             <textarea
               value={formData.paragraph_1}
               onChange={(e) => setFormData({...formData, paragraph_1: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Второй параграф</label>
+            <label className="block text-gray-900 font-medium mb-2">Второй параграф</label>
             <textarea
               value={formData.paragraph_2}
               onChange={(e) => setFormData({...formData, paragraph_2: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Третий параграф</label>
+            <label className="block text-gray-900 font-medium mb-2">Третий параграф</label>
             <textarea
               value={formData.paragraph_3}
               onChange={(e) => setFormData({...formData, paragraph_3: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-24 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Текст кнопки</label>
+            <label className="block text-gray-900 font-medium mb-2">Текст кнопки</label>
             <input
               type="text"
               value={formData.button_text}
               onChange={(e) => setFormData({...formData, button_text: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Изображение</label>
+            <label className="block text-gray-900 font-medium mb-2">Изображение</label>
             <ImageUpload
               preview={formData.image_path}
               onImageUpload={(path) => setFormData({...formData, image_path: path})}

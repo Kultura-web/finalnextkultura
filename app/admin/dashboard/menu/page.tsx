@@ -135,21 +135,21 @@ export default function MenuDashboard() {
           <div className="bg-white rounded-lg shadow p-6 mb-8 space-y-4 max-w-md">
             <h2 className="text-xl font-bold text-gray-900">Добавить новое меню</h2>
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Название</label>
+              <label className="block text-gray-900 font-medium mb-2">Название</label>
               <input
                 type="text"
                 value={newItem.title}
                 onChange={(e) => setNewItem({...newItem, title: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                 placeholder="Например: Основное меню"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Тип меню</label>
+              <label className="block text-gray-900 font-medium mb-2">Тип меню</label>
               <select
                 value={newItem.menu_type}
                 onChange={(e) => setNewItem({...newItem, menu_type: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
               >
                 <option value="main">Основное</option>
                 <option value="children">Детское</option>

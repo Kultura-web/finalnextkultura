@@ -83,36 +83,36 @@ export default function HeroDashboard() {
 
         <div className="bg-white rounded-lg shadow p-6 space-y-6">
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Заголовок</label>
+            <label className="block text-gray-900 font-medium mb-2">Заголовок</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Подзаголовок</label>
+            <label className="block text-gray-900 font-medium mb-2">Подзаголовок</label>
             <textarea
               value={formData.subtitle}
               onChange={(e) => setFormData({...formData, subtitle: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-20"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-20 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Текст кнопки</label>
+            <label className="block text-gray-900 font-medium mb-2">Текст кнопки</label>
             <input
               type="text"
               value={formData.button_text}
               onChange={(e) => setFormData({...formData, button_text: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Фоновое изображение</label>
+            <label className="block text-gray-900 font-medium mb-2">Фоновое изображение</label>
             <ImageUpload
               preview={formData.background_image_path}
               onImageUpload={(path) => setFormData({...formData, background_image_path: path})}

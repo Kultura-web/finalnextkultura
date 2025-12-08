@@ -42,10 +42,10 @@ export default function ImageUpload({ onImageUpload, bucket = 'cms-images', prev
       )}
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400 transition"
+        className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center cursor-pointer hover:border-gray-600 transition bg-gray-50"
       >
-        <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-        <p className="text-gray-600">
+        <Upload className="w-8 h-8 mx-auto mb-2 text-gray-700" />
+        <p className="text-gray-800 font-medium">
           {isLoading ? 'Загрузка...' : 'Нажмите для загрузки изображения'}
         </p>
         <input
@@ -57,7 +57,7 @@ export default function ImageUpload({ onImageUpload, bucket = 'cms-images', prev
           disabled={isLoading}
         />
       </div>
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && <p className="text-red-600 text-sm font-medium">{error}</p>}
     </div>
   );
 }

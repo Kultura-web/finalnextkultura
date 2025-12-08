@@ -143,29 +143,29 @@ export default function OffersDashboard() {
               {editingOfferId === offer.id ? (
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Название</label>
+                    <label className="block text-gray-900 font-medium mb-2">Название</label>
                     <input
                       type="text"
                       value={editForm.title || ''}
                       onChange={(e) => setEditForm({...editForm, title: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Описание</label>
+                    <label className="block text-gray-900 font-medium mb-2">Описание</label>
                     <textarea
                       value={editForm.description || ''}
                       onChange={(e) => setEditForm({...editForm, description: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-20"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 h-20 text-gray-900"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Скидка (%)</label>
+                    <label className="block text-gray-900 font-medium mb-2">Скидка (%)</label>
                     <input
                       type="number"
                       value={editForm.discount || 0}
                       onChange={(e) => setEditForm({...editForm, discount: parseInt(e.target.value)})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                     />
                   </div>
                   <div className="flex gap-4">

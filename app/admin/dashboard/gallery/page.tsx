@@ -136,35 +136,35 @@ export default function GalleryDashboard() {
           <div className="bg-white rounded-lg shadow p-6 mb-8 space-y-4">
             <h2 className="text-xl font-bold text-gray-900">Добавить новое изображение</h2>
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Название</label>
+              <label className="block text-gray-900 font-medium mb-2">Название</label>
               <input
                 type="text"
                 value={newImage.title || ''}
                 onChange={(e) => setNewImage({...newImage, title: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Ширина (cols)</label>
+                <label className="block text-gray-900 font-medium mb-2">Ширина (cols)</label>
                 <input
                   type="number"
                   min="1"
                   max="2"
                   value={newImage.span_cols || 1}
                   onChange={(e) => setNewImage({...newImage, span_cols: parseInt(e.target.value)})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Высота (rows)</label>
+                <label className="block text-gray-900 font-medium mb-2">Высота (rows)</label>
                 <input
                   type="number"
                   min="1"
                   max="2"
                   value={newImage.span_rows || 1}
                   onChange={(e) => setNewImage({...newImage, span_rows: parseInt(e.target.value)})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                 />
               </div>
             </div>
@@ -193,35 +193,35 @@ export default function GalleryDashboard() {
               {editingImageId === image.id ? (
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-gray-700 font-medium mb-2">Название</label>
+                    <label className="block text-gray-900 font-medium mb-2">Название</label>
                     <input
                       type="text"
                       value={editForm.title || ''}
                       onChange={(e) => setEditForm({...editForm, title: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-gray-700 font-medium mb-2">Ширина</label>
+                      <label className="block text-gray-900 font-medium mb-2">Ширина</label>
                       <input
                         type="number"
                         min="1"
                         max="2"
                         value={editForm.span_cols || 1}
                         onChange={(e) => setEditForm({...editForm, span_cols: parseInt(e.target.value)})}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-700 font-medium mb-2">Высота</label>
+                      <label className="block text-gray-900 font-medium mb-2">Высота</label>
                       <input
                         type="number"
                         min="1"
                         max="2"
                         value={editForm.span_rows || 1}
                         onChange={(e) => setEditForm({...editForm, span_rows: parseInt(e.target.value)})}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
                       />
                     </div>
                   </div>
