@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import BookingModal from './BookingModal';
-import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface OfferImage {
   id: string;
@@ -19,31 +18,24 @@ interface OfferData {
   offer_images?: OfferImage[];
 }
 
-const defaultOffers: OfferData[] = [];
+const defaultOffers: OfferData[] = [
+  {
+    id: '1',
+    title: 'Спецпредложение 1',
+    description: 'Особое предложение для вас',
+    discount: 10,
+    display_order: 1,
+    offer_images: [],
+  },
+];
 
 export default function Offers() {
-  const [offers, setOffers] = useState<OfferData[]>(defaultOffers);
+  const [offers] = useState<OfferData[]>(defaultOffers);
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState<{ title: string; discount: number } | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({});
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const { data } = await supabase
-          .from('offers')
-          .select('*, offer_images(*)')
-          .order('display_order');
-        if (data) setOffers(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchOffers();
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -114,10 +106,7 @@ export default function Offers() {
           {offers.map((offer, index) => {
             const images = offer.offer_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
             const showMultipleImages = images.length > 1;
-            let currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
-            if (currentImage.startsWith('/cms-images/')) {
-              currentImage = getPublicImageUrl(currentImage, 'cms-images');
-            }
+            const currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
 
             return (
               <div

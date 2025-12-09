@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
-import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface RoomImage {
   id: string;
@@ -28,6 +27,7 @@ const defaultRooms: RoomData[] = [
     price: 'от 450 BYN',
     features: ['44 м²', 'Двуспальная кровать', 'Рабочая зона', 'Wi‑Fi', 'Небольшой балкон'],
     display_order: 1,
+    room_images: [],
   },
   {
     id: '2',
@@ -36,35 +36,17 @@ const defaultRooms: RoomData[] = [
     price: 'от 500 BYN',
     features: ['38 м²', 'Зона отдыха', 'Балкон', 'Ванная чаша'],
     display_order: 2,
+    room_images: [],
   },
 ];
 
 export default function Rooms() {
-  const [rooms, setRooms] = useState<RoomData[]>(defaultRooms);
+  const [rooms] = useState<RoomData[]>(defaultRooms);
   const [isVisible, setIsVisible] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(defaultRooms.map(() => 0));
-
-  useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const { data } = await supabase
-          .from('rooms')
-          .select('*, room_images(*)')
-          .order('display_order');
-        if (data) {
-          setRooms(data);
-          setCurrentImageIndexes(data.map(() => 0));
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchRooms();
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -142,10 +124,7 @@ export default function Rooms() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => {
             const images = room.room_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
-            let currentImage = images[currentImageIndexes[index]] || '/Rooms/IMG_20251120_145334_889.jpg';
-            if (currentImage.startsWith('/cms-images/')) {
-              currentImage = getPublicImageUrl(currentImage, 'cms-images');
-            }
+            const currentImage = images[currentImageIndexes[index]] || '/Rooms/IMG_20251120_145334_889.jpg';
 
             return (
             <div

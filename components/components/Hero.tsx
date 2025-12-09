@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { supabase, getPublicImageUrl } from '@/lib/supabase';
+import { useState } from 'react';
 
 interface HeroData {
   title: string;
@@ -18,33 +17,13 @@ const defaultHero: HeroData = {
 };
 
 export default function Hero() {
-  const [hero, setHero] = useState<HeroData>(defaultHero);
-
-  useEffect(() => {
-    const fetchHero = async () => {
-      try {
-        const { data } = await supabase
-          .from('hero_section')
-          .select('*')
-          .maybeSingle();
-        if (data) setHero(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchHero();
-  }, []);
-
-  const getImageUrl = () => {
-    return getPublicImageUrl(hero.background_image_path, 'cms-images');
-  };
+  const [hero] = useState<HeroData>(defaultHero);
 
   return (
     <section id="home" className="relative h-screen flex items-end overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={getImageUrl()}
+          src={hero.background_image_path}
           alt="Hotel"
           loading="eager"
           fetchPriority="high"

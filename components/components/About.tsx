@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from 'react';
-import { supabase, getPublicImageUrl } from '@/lib/supabase';
 
 interface AboutData {
   title: string;
@@ -23,24 +22,8 @@ const defaultAbout: AboutData = {
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
-  const [about, setAbout] = useState<AboutData>(defaultAbout);
+  const [about] = useState<AboutData>(defaultAbout);
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchAbout = async () => {
-      try {
-        const { data } = await supabase
-          .from('about_section')
-          .select('*')
-          .maybeSingle();
-        if (data) setAbout(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchAbout();
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,9 +46,6 @@ export default function About() {
     };
   }, []);
 
-  const getImageUrl = () => {
-    return getPublicImageUrl(about.image_path, 'cms-images');
-  };
 
   return (
     <section id="about" className="py-16 md:py-32 bg-[#e8e5e0]" ref={sectionRef}>
@@ -129,7 +109,7 @@ export default function About() {
           >
             <div className="w-full h-[300px] md:h-[600px] overflow-hidden transform hover:shadow-2xl transition-all duration-500 relative">
               <img
-                src={getImageUrl()}
+                src={about.image_path}
                 alt="Hotel Spa"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]"
               />

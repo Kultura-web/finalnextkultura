@@ -1,6 +1,5 @@
 import { Eye } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { supabase, getPublicImageUrl } from '@/lib/supabase';
+import { useState } from 'react';
 
 interface GalleryImage {
   id: string;
@@ -19,23 +18,7 @@ const defaultGalleryImages: GalleryImage[] = [
 ];
 
 export default function Gallery() {
-  const [images, setImages] = useState<GalleryImage[]>(defaultGalleryImages);
-
-  useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const { data } = await supabase
-          .from('gallery_images')
-          .select('*')
-          .order('display_order');
-        if (data) setImages(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchGallery();
-  }, []);
+  const [images] = useState<GalleryImage[]>(defaultGalleryImages);
 
   return (
     <section className="py-16 md:py-24 bg-[#e8e5e0]">
@@ -51,18 +34,14 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 auto-rows-[150px] md:auto-rows-[200px]">
-          {images.map((image, index) => {
-            const imageUrl = image.image_path.startsWith('/cms-images/')
-              ? getPublicImageUrl(image.image_path, 'cms-images')
-              : image.image_path;
-            return (
+          {images.map((image, index) => (
             <div
               key={image.id}
               className={`col-span-${image.span_cols} row-span-${image.span_rows} relative overflow-hidden group cursor-pointer animate-fade-in`}
               style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animation: `fadeIn 0.8s ease-out ${index * 0.1}s forwards` }}
             >
               <img
-                src={imageUrl}
+                src={image.image_path}
                 alt={image.title}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75 brightness-90"
               />
@@ -80,8 +59,7 @@ export default function Gallery() {
                 </div>
               </div>
             </div>
-            );
-          })}
+          ))}
         </div>
 
         <div className="text-center mt-8 md:mt-12">
