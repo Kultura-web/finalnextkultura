@@ -47,7 +47,7 @@ export default function Footer() {
                   href="/oferta"
                   className="hover:text-white transition-colors"
                 >
-                  Оферта
+                  Политика Обработки Персональных Данных
                 </Link>
               </li>
               <li>
