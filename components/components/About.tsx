@@ -2,27 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-interface AboutData {
-  title: string;
-  paragraph_1: string;
-  paragraph_2: string;
-  paragraph_3: string;
-  image_path: string;
-  button_text: string;
-}
-
-const defaultAbout: AboutData = {
-  title: 'Что такое Отель Культура?',
-  paragraph_1: 'Бутик Отель "Культура" — особое место в самом центре города Гродно, сочетающее старину здания 1860-х годов и современный уют. Окна выходят на главную пешеходную улицу, а с балконов открывается перспектива на площадь.',
-  paragraph_2: 'Просторные номера со всеми условиями созданы для отдыха. В отеле с самого утра работает кафе с сытной и интересной кухней, напитками и десертами.',
-  paragraph_3: 'В шаговой доступности — все главные достопримечательности города.',
-  image_path: '/cms-images/grodno.jpg',
-  button_text: 'Забронировать',
-};
-
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
-  const [about] = useState<AboutData>(defaultAbout);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,7 +27,6 @@ export default function About() {
     };
   }, []);
 
-
   return (
     <section id="about" className="py-16 md:py-32 bg-[#e8e5e0]" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-4 md:px-12">
@@ -58,7 +38,7 @@ export default function About() {
               }`}
               style={{ transitionDelay: '0.2s' }}
             >
-              {about.title}
+              Что такое<br />Отель Культура?
             </h2>
             <div className="space-y-6 md:space-y-8 text-gray-700 leading-relaxed text-base md:text-lg">
               <p
@@ -67,7 +47,9 @@ export default function About() {
                 }`}
                 style={{ transitionDelay: '0.4s' }}
               >
-                {about.paragraph_1}
+                Бутик Отель "Культура" — особое место в самом центре города Гродно, сочетающее старину здания 1860-х годов и современный уют.
+            
+                Окна выходят на главную пешеходную улицу, а с балконов открывается перспектива на площадь.
               </p>
               <p
                 className={`transform transition-all duration-1000 ${
@@ -75,7 +57,7 @@ export default function About() {
                 }`}
                 style={{ transitionDelay: '0.8s' }}
               >
-                {about.paragraph_2}
+                Просторные номера со всеми условиями созданы для отдыха. В отеле с самого утра работает кафе с сытной и интересной кухней, напитками и десертами.
               </p>
               <p
                 className={`transform transition-all duration-1000 ${
@@ -83,7 +65,7 @@ export default function About() {
                 }`}
                 style={{ transitionDelay: '1s' }}
               >
-                {about.paragraph_3}
+                В шаговой доступности — все главные достопримечательности города.
               </p>
             </div>
             <div
@@ -96,7 +78,7 @@ export default function About() {
                 href="#rooms"
                 className="inline-block w-full sm:w-auto text-center px-6 md:px-8 py-3 md:py-4 bg-[#c8aa57] text-black hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105 text-sm md:text-base"
               >
-                {about.button_text}
+                Забронировать
               </a>
             </div>
           </div>
@@ -109,7 +91,7 @@ export default function About() {
           >
             <div className="w-full h-[300px] md:h-[600px] overflow-hidden transform hover:shadow-2xl transition-all duration-500 relative">
               <img
-                src={about.image_path}
+                src="grodno.jpg"
                 alt="Hotel Spa"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]"
               />
