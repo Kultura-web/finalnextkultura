@@ -3,50 +3,54 @@
 import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
 
-interface RoomImage {
-  id: string;
-  image_path: string;
-  display_order: number;
-}
-
-interface RoomData {
-  id: string;
-  title: string;
-  description: string;
-  price: string;
-  features: string[];
-  display_order: number;
-  room_images?: RoomImage[];
-}
-
-const defaultRooms: RoomData[] = [
+const rooms = [
   {
-    id: '1',
     title: 'Делюкс с балконом',
     description: 'Уютный современный номер с выходом на небольшой балкон. Идеален для пары или одного гостя.',
     price: 'от 450 BYN',
-    features: ['44 м²', 'Двуспальная кровать', 'Рабочая зона', 'Wi‑Fi', 'Небольшой балкон'],
-    display_order: 1,
-    room_images: [],
+    images: [
+      '/Rooms/IMG_20251120_150935_690.jpg',
+      '/Rooms/IMG_20251120_150919_870.jpg',
+      '/Rooms/IMG_20251120_150916_901.jpg',
+      '/Rooms/IMG_20251120_150859_353.jpg',
+      '/Rooms/IMG_20251120_150855_053.jpg',
+      '/Rooms/IMG_20251120_150938_549.jpg',
+    ],
+    features: ['44 м²', 'Двуспальная кровать', 'Рабочая зона', 'Wi‑Fi', 'Небольшой балкон']
   },
   {
-    id: '2',
     title: 'Представительский люкс с балконом и ванной чашей',
     description: 'Просторный номер с зоной отдыха, балконом и ванной чашей.',
     price: 'от 500 BYN',
-    features: ['38 м²', 'Зона отдыха', 'Балкон', 'Ванная чаша'],
-    display_order: 2,
-    room_images: [],
+    images: [
+      '/Rooms/IMG_20251120_145519_667.jpg',
+      '/Rooms/IMG_20251120_145501_634.jpg',
+      '/Rooms/IMG_20251120_145526_536.jpg',
+      '/Rooms/IMG_20251120_145556_884.jpg',
+      '/Rooms/IMG_20251120_145604_693.jpg',
+      '/Rooms/IMG_20251120_145712_373.jpg',
+    ],
+    features: ['38 м²', 'Зона отдыха', 'Балкон', 'Ванная чаша']
   },
+  {
+    title: 'Делюкс с ванной чашей',
+    description: 'Комфортный номер средней площади с отдельной зоной отдыха и ванной чашей.',
+    price: 'от 500 BYN',
+    images: [
+      '/Rooms/IMG_20251120_145334_889.jpg',
+      '/Rooms/IMG_20251120_145338_036.jpg',
+      '/Rooms/IMG_20251120_145410_674.jpg'
+    ],
+    features: ['40 м²', 'Отдельная небольшая гостиная', 'Wi‑Fi', 'Ванная чаша']
+  }
 ];
 
 export default function Rooms() {
-  const [rooms] = useState<RoomData[]>(defaultRooms);
   const [isVisible, setIsVisible] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(defaultRooms.map(() => 0));
+  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(() => rooms.map(() => 0));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,8 +70,7 @@ export default function Rooms() {
   }, []);
 
   const goPrev = (cardIndex: number) => {
-    const len = (rooms[cardIndex]?.room_images?.length) || 0;
-    if (len === 0) return;
+    const len = rooms[cardIndex].images.length;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
       copy[cardIndex] = (copy[cardIndex] - 1 + len) % len;
@@ -76,8 +79,7 @@ export default function Rooms() {
   };
 
   const goNext = (cardIndex: number) => {
-    const len = (rooms[cardIndex]?.room_images?.length) || 0;
-    if (len === 0) return;
+    const len = rooms[cardIndex].images.length;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
       copy[cardIndex] = (copy[cardIndex] + 1) % len;
@@ -122,13 +124,9 @@ export default function Rooms() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {rooms.map((room, index) => {
-            const images = room.room_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
-            const currentImage = images[currentImageIndexes[index]] || '/Rooms/IMG_20251120_145334_889.jpg';
-
-            return (
+          {rooms.map((room, index) => (
             <div
-              key={room.id}
+              key={index}
               className={`group transform transition-all duration-1000 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
@@ -136,15 +134,15 @@ export default function Rooms() {
             >
               <div className="relative h-[300px] md:h-[500px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                 <img
-                  src={currentImage}
+                  src={room.images[currentImageIndexes[index]]}
                   alt={`${room.title} ${currentImageIndexes[index] + 1}`}
                   className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
-                  onClick={() => setFullscreenImage(currentImage)}
+                  onClick={() => setFullscreenImage(room.images[currentImageIndexes[index]])}
                 />
 
                 <div className="absolute inset-0 bg-black/15 group-hover:bg-black/25 transition-all duration-500"></div>
 
-                {images.length > 1 && (
+                {room.images.length > 1 && (
                   <>
                     <button
                       onClick={() => goPrev(index)}
@@ -160,7 +158,7 @@ export default function Rooms() {
                     </button>
 
                     <div className="absolute left-1/2 -translate-x-1/2 bottom-3 z-10 flex gap-2">
-                      {images.map((_, i) => (
+                      {room.images.map((_, i) => (
                         <button
                           key={i}
                           onClick={() => jumpTo(index, i)}
@@ -189,8 +187,7 @@ export default function Rooms() {
                 <span className="text-xl md:text-2xl font-light text-gray-900">{room.price}</span>
               </div>
             </div>
-            );
-          })}
+          ))}
         </div>
       </div>
 
