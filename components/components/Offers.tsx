@@ -3,34 +3,29 @@
 import { useEffect, useRef, useState } from 'react';
 import BookingModal from './BookingModal';
 
-interface OfferImage {
-  id: string;
-  image_path: string;
-  display_order: number;
-}
-
-interface OfferData {
-  id: string;
-  title: string;
-  description: string;
-  discount: number;
-  display_order: number;
-  offer_images?: OfferImage[];
-}
-
-const defaultOffers: OfferData[] = [
+const offers = [
   {
-    id: '1',
-    title: 'Спецпредложение 1',
-    description: 'Особое предложение для вас',
-    discount: 10,
-    display_order: 1,
-    offer_images: [],
+    title: 'Утро невесты в самом сердце Гродно',
+    description: 'Продуманный интерьер и великолепный вид с лоджии сделает ваш особенный день незабываемым',
+    images: [
+      '/Offers/Offer1.jpg',
+      '/Offers/Offer2.jpg',
+      '/Offers/Offer3.jpg',
+      '/Offers/Offer4.jpg',
+     ], // Single image
+    discount: 15
   },
+  {
+    title: 'Культурная программа',
+    description: 'Скидка 10% на проживание с посещением лучших достопримечательностей города',
+    images: [
+      '/Resto/IMG_20251119_175605_550.jpg',
+    ],
+    discount: 10
+  }
 ];
 
 export default function Offers() {
-  const [offers] = useState<OfferData[]>(defaultOffers);
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState<{ title: string; discount: number } | null>(null);
@@ -59,19 +54,17 @@ export default function Offers() {
   }, []);
 
   const goToPreviousImage = (offerIndex: number) => {
-    const images = offers[offerIndex]?.offer_images?.map(img => img.image_path) || [];
-    if (!images.length) return;
+    if (!offers[offerIndex].images) return;
     const currentIndex = currentImageIndex[offerIndex] || 0;
-    const maxIndex = images.length - 1;
+    const maxIndex = offers[offerIndex].images.length - 1;
     const newIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
     setCurrentImageIndex(prev => ({ ...prev, [offerIndex]: newIndex }));
   };
 
   const goToNextImage = (offerIndex: number) => {
-    const images = offers[offerIndex]?.offer_images?.map(img => img.image_path) || [];
-    if (!images.length) return;
+    if (!offers[offerIndex].images) return;
     const currentIndex = currentImageIndex[offerIndex] || 0;
-    const maxIndex = images.length - 1;
+    const maxIndex = offers[offerIndex].images.length - 1;
     const newIndex = currentIndex === maxIndex ? 0 : currentIndex + 1;
     setCurrentImageIndex(prev => ({ ...prev, [offerIndex]: newIndex }));
   };
@@ -104,13 +97,15 @@ export default function Offers() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {offers.map((offer, index) => {
-            const images = offer.offer_images?.sort((a, b) => a.display_order - b.display_order).map(img => img.image_path) || [];
-            const showMultipleImages = images.length > 1;
-            const currentImage = images[currentImageIndex[index] || 0] || '/Offers/Offer1.jpg';
-
+            const imageCount = offer.images?.length || 0;
+            const showMultipleImages = imageCount > 1;
+            const currentImage = showMultipleImages 
+              ? offer.images[currentImageIndex[index] || 0] 
+              : offer.images[0];
+            
             return (
               <div
-                key={offer.id}
+                key={index}
                 className={`group transform transition-all duration-1000 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
@@ -124,7 +119,8 @@ export default function Offers() {
                   />
                   <div className="absolute inset-0 bg-black/15"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent transition-opacity duration-500"></div>
-
+                  
+                  {/* Navigation buttons for multiple images */}
                   {showMultipleImages && (
                     <>
                       <button
@@ -163,7 +159,7 @@ export default function Offers() {
                 </button>
               </div>
             );
-            })}
+          })}
         </div>
       </div>
     
