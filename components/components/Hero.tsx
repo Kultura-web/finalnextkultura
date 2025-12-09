@@ -1,29 +1,9 @@
-'use client';
-
-import { useState } from 'react';
-
-interface HeroData {
-  title: string;
-  subtitle: string;
-  background_image_path: string;
-  button_text: string;
-}
-
-const defaultHero: HeroData = {
-  title: 'Бутик-отель в историческом центре Гродно',
-  subtitle: 'Искусство, культура и комфорт на улице Советская, 3',
-  background_image_path: '/cms-images/1765232257418_grodno.jpg',
-  button_text: 'Забронировать',
-};
-
 export default function Hero() {
-  const [hero] = useState<HeroData>(defaultHero);
-
   return (
     <section id="home" className="relative h-screen flex items-end overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={hero.background_image_path}
+          src="/Rooms/IMG_20251120_145334_889.jpg"
           alt="Hotel"
           loading="eager"
           fetchPriority="high"
@@ -34,17 +14,17 @@ export default function Hero() {
 
       <div className="relative z-10 pb-24 md:pb-32 px-4 md:px-12 max-w-7xl mx-auto w-full animate-fade-in-up">
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-light text-white mb-4 md:mb-6 max-w-2xl leading-tight">
-          {hero.title}
+          Бутик-отель в историческом центре Гродно
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 md:mb-8 max-w-xl font-light">
-          {hero.subtitle}
+          Искусство, культура и комфорт на улице Советская, 3
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <a
             href="#rooms"
             className="px-6 sm:px-8 py-3 sm:py-4 bg-[#c8aa57] text-gray-900 hover:bg-[#c8aa57] transition-all duration-300 hover:scale-105 text-center text-sm sm:text-base font-medium"
           >
-            {hero.button_text}
+            Забронировать
           </a>
         </div>
       </div>
