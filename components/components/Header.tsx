@@ -148,7 +148,7 @@ export default function Header() {
               className="flex items-center text-sm text-gray-700 hover:text-gray-900 transition-all duration-300 hover:scale-105"
             >
               <Phone className="w-4 h-4 mr-2" />
-              +375 33 342-88-88
+              {isRestaurant ? "+375 33 388-54-54" : "+375 33 342-88-88" }
             </a>
             {!isRestaurant && (
               <button
