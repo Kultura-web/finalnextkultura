@@ -2,50 +2,10 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
-
-const rooms = [
-  {
-    title: 'Делюкс с балконом',
-    description: 'Уютный современный номер с выходом на небольшой балкон. Идеален для пары или одного гостя.',
-    price: 'от 450 BYN',
-    images: [
-      '/Rooms/IMG_20251120_150935_690.jpg',
-      '/Rooms/IMG_20251120_150919_870.jpg',
-      '/Rooms/IMG_20251120_150916_901.jpg',
-      '/Rooms/IMG_20251120_150859_353.jpg',
-      '/Rooms/IMG_20251120_150855_053.jpg',
-      '/Rooms/IMG_20251120_150938_549.jpg',
-    ],
-    features: ['44 м²', 'Двуспальная кровать', 'Рабочая зона', 'Wi‑Fi', 'Небольшой балкон']
-  },
-  {
-    title: 'Представительский люкс с балконом и ванной чашей',
-    description: 'Просторный номер с зоной отдыха, балконом и ванной чашей.',
-    price: 'от 500 BYN',
-    images: [
-      '/Rooms/IMG_20251120_145519_667.jpg',
-      '/Rooms/IMG_20251120_145501_634.jpg',
-      '/Rooms/IMG_20251120_145526_536.jpg',
-      '/Rooms/IMG_20251120_145556_884.jpg',
-      '/Rooms/IMG_20251120_145604_693.jpg',
-      '/Rooms/IMG_20251120_145712_373.jpg',
-    ],
-    features: ['38 м²', 'Зона отдыха', 'Балкон', 'Ванная чаша']
-  },
-  {
-    title: 'Делюкс с ванной чашей',
-    description: 'Комфортный номер средней площади с отдельной зоной отдыха и ванной чашей.',
-    price: 'от 500 BYN',
-    images: [
-      '/Rooms/IMG_20251120_145334_889.jpg',
-      '/Rooms/IMG_20251120_145338_036.jpg',
-      '/Rooms/IMG_20251120_145410_674.jpg'
-    ],
-    features: ['40 м²', 'Отдельная небольшая гостиная', 'Wi‑Fi', 'Ванная чаша']
-  }
-];
+import { useContent } from '@/lib/ContentContext';
 
 export default function Rooms() {
+  const { rooms } = useContent();
   const [isVisible, setIsVisible] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -70,7 +30,7 @@ export default function Rooms() {
   }, []);
 
   const goPrev = (cardIndex: number) => {
-    const len = rooms[cardIndex].images.length;
+    const len = rooms[cardIndex]?.room_images?.length || 0;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
       copy[cardIndex] = (copy[cardIndex] - 1 + len) % len;
@@ -79,7 +39,7 @@ export default function Rooms() {
   };
 
   const goNext = (cardIndex: number) => {
-    const len = rooms[cardIndex].images.length;
+    const len = rooms[cardIndex]?.room_images?.length || 0;
     setCurrentImageIndexes(prev => {
       const copy = [...prev];
       copy[cardIndex] = (copy[cardIndex] + 1) % len;
@@ -124,70 +84,75 @@ export default function Rooms() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {rooms.map((room, index) => (
-            <div
-              key={index}
-              className={`group transform transition-all duration-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${0.6 + index * 0.2}s` }}
-            >
-              <div className="relative h-[300px] md:h-[500px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                <img
-                  src={room.images[currentImageIndexes[index]]}
-                  alt={`${room.title} ${currentImageIndexes[index] + 1}`}
-                  className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
-                  onClick={() => setFullscreenImage(room.images[currentImageIndexes[index]])}
-                />
+          {rooms.map((room, index) => {
+            const roomImages = room.room_images || [];
+            const currentImage = roomImages[currentImageIndexes[index]]?.image_path || '';
 
-                <div className="absolute inset-0 bg-black/15 group-hover:bg-black/25 transition-all duration-500"></div>
+            return (
+              <div
+                key={room.id || index}
+                className={`group transform transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${0.6 + index * 0.2}s` }}
+              >
+                <div className="relative h-[300px] md:h-[500px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                  <img
+                    src={currentImage}
+                    alt={`${room.title} ${currentImageIndexes[index] + 1}`}
+                    className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
+                    onClick={() => setFullscreenImage(currentImage)}
+                  />
 
-                {room.images.length > 1 && (
-                  <>
-                    <button
-                      onClick={() => goPrev(index)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-white/60 backdrop-blur-sm rounded-full p-2 md:p-3 shadow hover:scale-105"
-                    >
-                      ‹
-                    </button>
-                    <button
-                      onClick={() => goNext(index)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-white/60 backdrop-blur-sm rounded-full p-2 md:p-3 shadow hover:scale-105"
-                    >
-                      ›
-                    </button>
+                  <div className="absolute inset-0 bg-black/15 group-hover:bg-black/25 transition-all duration-500"></div>
 
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-3 z-10 flex gap-2">
-                      {room.images.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => jumpTo(index, i)}
-                          className={`w-2 h-2 rounded-full transition-all ${
-                            currentImageIndexes[index] === i ? 'bg-white scale-125' : 'bg-white/60'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
+                  {roomImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => goPrev(index)}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-white/60 backdrop-blur-sm rounded-full p-2 md:p-3 shadow hover:scale-105"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        onClick={() => goNext(index)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-white/60 backdrop-blur-sm rounded-full p-2 md:p-3 shadow hover:scale-105"
+                      >
+                        ›
+                      </button>
+
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-3 z-10 flex gap-2">
+                        {roomImages.map((_: any, i: number) => (
+                          <button
+                            key={i}
+                            onClick={() => jumpTo(index, i)}
+                            className={`w-2 h-2 rounded-full transition-all ${
+                              currentImageIndexes[index] === i ? 'bg-white scale-125' : 'bg-white/60'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-light text-gray-900 mb-3 group-hover:translate-x-2 transition-transform duration-300">{room.title}</h3>
+                <p className="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">{room.description}</p>
+
+                <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
+                  {room.features?.map((feature: string, i: number) => (
+                    <span key={i} className="text-xs md:text-sm text-gray-500">
+                      {feature}{i < (room.features?.length || 0) - 1 ? ' •' : ''}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <span className="text-xl md:text-2xl font-light text-gray-900">{room.price}</span>
+                </div>
               </div>
-
-              <h3 className="text-xl md:text-2xl font-light text-gray-900 mb-3 group-hover:translate-x-2 transition-transform duration-300">{room.title}</h3>
-              <p className="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">{room.description}</p>
-
-              <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-                {room.features.map((feature, i) => (
-                  <span key={i} className="text-xs md:text-sm text-gray-500">
-                    {feature}{i < room.features.length - 1 ? ' •' : ''}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <span className="text-xl md:text-2xl font-light text-gray-900">{room.price}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

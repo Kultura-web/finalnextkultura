@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/components/Header";
 import Footer from "@/components/components/Footer";
 import TravelLineLoader from "@/components/components/TravellineLoader";
+import { ContentProvider } from "@/lib/ContentContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +29,14 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Loads TravelLine scripts safely on client */}
-        <TravelLineLoader />
+        <ContentProvider>
+          {/* Loads TravelLine scripts safely on client */}
+          <TravelLineLoader />
 
-        <Header />
-        {children}
-        <Footer />
+          <Header />
+          {children}
+          <Footer />
+        </ContentProvider>
       </body>
     </html>
   );
