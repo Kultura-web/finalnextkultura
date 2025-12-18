@@ -1,0 +1,174 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    SUPABASE MIGRATION CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: CREATE SUPABASE PROJECT
+─────────────────────────────────
+☐ Go to https://supabase.com
+☐ Sign in or create account
+☐ Click "New Project"
+☐ Fill in project details (name, password, region)
+☐ Wait for project to be created (5-10 minutes)
+
+STEP 2: GET CREDENTIALS
+───────────────────────
+☐ Go to Settings → API
+☐ Copy Project URL (https://xxxxx.supabase.co)
+☐ Copy Anon Key (starts with eyJ...)
+☐ Update .env file with these values
+☐ Verify no whitespace in credentials
+
+STEP 3: RUN ALL 5 MIGRATIONS
+─────────────────────────────
+Go to Supabase Dashboard → SQL Editor → New Query
+
+MIGRATION #1: Create Schema & Tables
+☐ Open: supabase/migrations/20251208214518_create_cms_content_schema.sql
+☐ Copy ALL content
+☐ Paste into Supabase SQL Editor
+☐ Click "Run" button
+☐ Check: No errors shown
+
+MIGRATION #2: Populate Data
+☐ Open: supabase/migrations/20251208214544_populate_default_content.sql
+☐ Copy ALL content
+☐ Paste into new Supabase Query
+☐ Click "Run" button
+☐ Check: Shows rows inserted
+
+MIGRATION #3: Create Storage Buckets
+☐ Open: supabase/migrations/20251208214600_create_storage_buckets.sql
+☐ Copy ALL content
+☐ Paste into new Supabase Query
+☐ Click "Run" button
+☐ Check: No errors
+
+MIGRATION #4: Fix RLS Policies
+☐ Open: supabase/migrations/20251208221230_fix_rls_policies_for_image_uploads.sql
+☐ Copy ALL content
+☐ Paste into new Supabase Query
+☐ Click "Run" button
+☐ Check: No errors
+
+MIGRATION #5: Add Storage Policies
+☐ Open: supabase/migrations/20251208221600_add_storage_rls_policies.sql
+☐ Copy ALL content
+☐ Paste into new Supabase Query
+☐ Click "Run" button
+☐ Check: No errors
+
+STEP 4: VERIFY DATABASE
+────────────────────────
+Go to Supabase → SQL Editor → New Query
+
+Copy and run this:
+```sql
+SELECT table_name, COUNT(*) as row_count
+FROM (
+  SELECT 'hero_section' as table_name, COUNT(*) FROM hero_section
+  UNION ALL SELECT 'about_section', COUNT(*) FROM about_section
+  UNION ALL SELECT 'rooms', COUNT(*) FROM rooms
+  UNION ALL SELECT 'room_images', COUNT(*) FROM room_images
+  UNION ALL SELECT 'offers', COUNT(*) FROM offers
+  UNION ALL SELECT 'offer_images', COUNT(*) FROM offer_images
+  UNION ALL SELECT 'gallery_images', COUNT(*) FROM gallery_images
+  UNION ALL SELECT 'menu_items', COUNT(*) FROM menu_items
+  UNION ALL SELECT 'restaurant_section', COUNT(*) FROM restaurant_section
+) as t;
+```
+
+Expected Results:
+  hero_section       → 1 row
+  about_section      → 1 row
+  rooms              → 3 rows
+  room_images        → 15 rows
+  offers             → 2 rows
+  offer_images       → 5 rows
+  gallery_images     → 8 rows
+  menu_items         → 3 rows
+  restaurant_section → 1 row
+
+☐ Verify ALL tables have expected row counts
+☐ Check: Storage → Buckets shows "cms-images" and "menu-files"
+
+STEP 5: TEST APPLICATION
+─────────────────────────
+☐ Terminal: npm run dev
+☐ Browser: http://localhost:3000
+☐ Verify: All content displays
+☐ Check: Hero section shows hotel name
+☐ Check: Rooms section shows 3 rooms
+☐ Check: Offers section shows 2 offers
+☐ Check: Gallery shows 8 images
+
+STEP 6: OPTIONAL - SETUP ADMIN AUTH
+────────────────────────────────────
+In Supabase → Authentication → Providers:
+☐ Enable Email/Password auth
+☐ Configure email settings if needed
+☐ Note: Default admin user can be created manually
+
+STEP 7: DEPLOY (OPTIONAL)
+──────────────────────────
+☐ Push code to GitHub
+☐ Go to Vercel.com
+☐ Click "Import Project"
+☐ Select your GitHub repo
+☐ Add environment variables:
+  - NEXT_PUBLIC_SUPABASE_URL
+  - NEXT_PUBLIC_SUPABASE_ANON_KEY
+☐ Click "Deploy"
+☐ Wait for deployment
+☐ Visit your live site
+
+═══════════════════════════════════════════════════════════════════════════════
+                          TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM: "Connection refused" or "Invalid URL"
+SOLUTION:
+  - Check .env file has correct NEXT_PUBLIC_SUPABASE_URL
+  - Verify URL matches exactly (copy-paste from Supabase)
+  - No spaces or typos allowed
+
+PROBLEM: Migrations fail with errors
+SOLUTION:
+  - Run migrations in order (don't skip any)
+  - Check for typos if manually editing SQL
+  - Try running in new SQL editor query each time
+
+PROBLEM: "RLS policy violation" when uploading images
+SOLUTION:
+  - Rerun migration #4 (fix_rls_policies)
+  - Rerun migration #5 (add_storage_rls_policies)
+  - Clear browser cache
+
+PROBLEM: Components show blank/no content
+SOLUTION:
+  - Verify all 5 migrations ran successfully
+  - Check data with SQL query above
+  - Check browser console for errors
+  - Verify .env credentials are correct
+
+PROBLEM: Admin dashboard not loading
+SOLUTION:
+  - Check if you're at /admin/login
+  - Verify authentication is enabled in Supabase
+  - Check browser console for errors
+
+═══════════════════════════════════════════════════════════════════════════════
+                          QUICK TEST COMMANDS
+═══════════════════════════════════════════════════════════════════════════════
+
+Run locally:
+  npm run dev
+
+Build for production:
+  npm run build
+
+Check database from command line (requires psql):
+  psql -h YOUR_PROJECT.supabase.co -U postgres -d postgres
+
+═══════════════════════════════════════════════════════════════════════════════
+Done! Your database is configured and ready. Visit http://localhost:3000
+═══════════════════════════════════════════════════════════════════════════════
