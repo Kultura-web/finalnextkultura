@@ -69,3 +69,13 @@ export async function fetchRestaurantSection() {
   if (error) throw error;
   return data;
 }
+
+export async function fetchFooter() {
+  const { data, error } = await supabase
+    .from('footer')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}

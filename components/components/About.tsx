@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useContent } from '@/lib/ContentContext';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 export default function About() {
   const { about } = useContent();
@@ -93,7 +94,7 @@ export default function About() {
           >
             <div className="w-full h-[300px] md:h-[600px] overflow-hidden transform hover:shadow-2xl transition-all duration-500 relative">
               <img
-                src={about.image_path}
+                src={getPublicImageUrl(about.image_path, 'cms-images')}
                 alt="Hotel"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2000ms]"
               />

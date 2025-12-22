@@ -148,3 +148,13 @@ export const DEFAULT_GALLERY = [
     display_order: 7,
   },
 ];
+
+export const DEFAULT_FOOTER = {
+  id: 'default',
+  copyright_text: '© 2024 Отель Культура. Все права защищены.',
+  company_address: 'ул. Советская, 22, Гродно, Беларусь',
+  company_phone: '+375 29 123-45-67',
+  company_email: 'info@kulturahotel.by',
+  facebook_url: 'https://facebook.com/kulturahotel',
+  instagram_url: 'https://instagram.com/kulturahotel',
+};

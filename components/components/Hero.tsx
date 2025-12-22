@@ -1,6 +1,7 @@
 'use client';
 
 import { useContent } from '@/lib/ContentContext';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 export default function Hero() {
   const { hero } = useContent();
@@ -9,7 +10,7 @@ export default function Hero() {
     <section id="home" className="relative h-screen flex items-end overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={hero.background_image_path}
+          src={getPublicImageUrl(hero.background_image_path, 'cms-images')}
           alt="Hotel"
           loading="eager"
           fetchPriority="high"

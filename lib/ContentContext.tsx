@@ -9,6 +9,7 @@ import {
   DEFAULT_OFFERS,
   DEFAULT_GALLERY,
   DEFAULT_ABOUT,
+  DEFAULT_FOOTER,
 } from './defaults/content';
 
 interface ContentContextType {
@@ -19,6 +20,7 @@ interface ContentContextType {
   menuItems: any[];
   about: any;
   restaurant: any;
+  footer: any;
   isLoading: boolean;
 }
 
@@ -60,6 +62,11 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     fetchFn: () => contentService.fetchRestaurantSection().catch(() => null),
   });
 
+  const footer = useAsyncContent({
+    defaultValue: DEFAULT_FOOTER,
+    fetchFn: () => contentService.fetchFooter().catch(() => null),
+  });
+
   const isLoading =
     hero.isLoading ||
     rooms.isLoading ||
@@ -67,7 +74,8 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     gallery.isLoading ||
     menuItems.isLoading ||
     about.isLoading ||
-    restaurant.isLoading;
+    restaurant.isLoading ||
+    footer.isLoading;
 
   return (
     <ContentContext.Provider
@@ -79,6 +87,7 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         menuItems: menuItems.data,
         about: about.data,
         restaurant: restaurant.data,
+        footer: footer.data,
         isLoading,
       }}
     >
