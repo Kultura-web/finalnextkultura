@@ -1,6 +1,5 @@
 'use client';
 
-import { Eye } from 'lucide-react';
 import { useContent } from '@/lib/ContentContext';
 
 export default function Gallery() {
@@ -23,27 +22,14 @@ export default function Gallery() {
           {gallery.map((image, index) => (
             <div
               key={image.id || index}
-              className={`${image.span} relative overflow-hidden group cursor-pointer animate-fade-in`}
+              className="relative overflow-hidden group cursor-pointer animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animation: `fadeIn 0.8s ease-out ${index * 0.1}s forwards` }}
             >
               <img
                 src={image.url}
-                alt={image.title}
+                alt="Gallery"
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-75 brightness-90"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-between p-6">
-                <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <div className="w-10 h-10 border border-white/50 flex items-center justify-center backdrop-blur-sm hover:bg-white/20 transition-colors duration-300">
-                    <Eye className="w-5 h-5 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-white text-lg font-light tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    {image.title}
-                  </h3>
-                  <div className="w-12 h-0.5 bg-white mt-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                </div>
-              </div>
             </div>
           ))}
         </div>
