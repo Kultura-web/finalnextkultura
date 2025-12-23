@@ -21,7 +21,9 @@ export default function MenuDashboard() {
   const [isAdding, setIsAdding] = useState(false);
   const [newItem, setNewItem] = useState({ title: '', menu_type: 'main' });
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const editFileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchMenuItems();
@@ -85,6 +87,48 @@ export default function MenuDashboard() {
     } finally {
       setUploadLoading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleReplaceFile = async (e: React.ChangeEvent<HTMLInputElement>, itemId: string, oldFilePath: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setUploadLoading(true);
+      const timestamp = Date.now();
+      const fileName = `${timestamp}_${file.name}`;
+
+      const { data, error } = await supabase.storage
+        .from('menu-files')
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const oldFileName = oldFilePath.split('/').pop();
+      if (oldFileName) {
+        await supabase.storage
+          .from('menu-files')
+          .remove([oldFileName]);
+      }
+
+      const newFilePath = `/menu-files/${data.path}`;
+      const { error: updateError } = await supabase
+        .from('menu_items')
+        .update({ file_path: newFilePath })
+        .eq('id', itemId);
+
+      if (updateError) throw updateError;
+
+      setEditingId(null);
+      fetchMenuItems();
+      setMessage('Файл успешно заменен!');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err: any) {
+      setMessage(`Ошибка: ${err.message}`);
+    } finally {
+      setUploadLoading(false);
+      if (editFileInputRef.current) editFileInputRef.current.value = '';
     }
   };
 
@@ -205,16 +249,51 @@ export default function MenuDashboard() {
                   <td className="px-6 py-4 text-gray-900">{item.title}</td>
                   <td className="px-6 py-4 text-gray-600">{getMenuTypeLabel(item.menu_type)}</td>
                   <td className="px-6 py-4 text-gray-600">
-                    <a
-                      href={item.file_path}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      Открыть
-                    </a>
+                    {editingId === item.id ? (
+                      <div className="flex items-center gap-2">
+                        <div
+                          onClick={() => editFileInputRef.current?.click()}
+                          className="border border-dashed border-gray-300 rounded px-3 py-1 text-sm cursor-pointer hover:border-gray-400 transition"
+                        >
+                          <span className="text-gray-600">
+                            {uploadLoading ? 'Загрузка...' : 'Выбрать файл'}
+                          </span>
+                          <input
+                            ref={editFileInputRef}
+                            type="file"
+                            accept=".pdf,.doc,.docx"
+                            onChange={(e) => handleReplaceFile(e, item.id, item.file_path)}
+                            className="hidden"
+                            disabled={uploadLoading}
+                          />
+                        </div>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="bg-gray-400 hover:bg-gray-500 text-white px-2 py-1 rounded text-sm transition"
+                        >
+                          Отмена
+                        </button>
+                      </div>
+                    ) : (
+                      <a
+                        href={item.file_path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        Открыть
+                      </a>
+                    )}
                   </td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-6 py-4 text-right flex gap-2 justify-end">
+                    {editingId !== item.id && (
+                      <button
+                        onClick={() => setEditingId(item.id)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm transition"
+                      >
+                        Заменить
+                      </button>
+                    )}
                     <button
                       onClick={() => handleDeleteItem(item.id, item.file_path)}
                       className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-sm transition"
