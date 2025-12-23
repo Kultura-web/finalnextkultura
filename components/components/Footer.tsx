@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="text-sm font-normal mb-4">Информация</h4>
-            <ul className="space-y-2 text-gray-200 text-sm">
+            <ul className="space-y-2 text-gray-400 text-sm">
               <li>
                 <Link
                   href="/rules"
