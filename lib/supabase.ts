@@ -20,6 +20,12 @@ export const uploadImage = async (file: File, bucket: string) => {
 };
 
 export const getPublicImageUrl = (path: string, bucket: string) => {
+  if (!path) return '';
+
+  if (path.startsWith('/') && !path.includes(bucket)) {
+    return path;
+  }
+
   const { data } = supabase.storage
     .from(bucket)
     .getPublicUrl(path.replace(`/${bucket}/`, ''));

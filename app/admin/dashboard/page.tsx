@@ -41,6 +41,12 @@ export default function AdminDashboard() {
       href: '/admin/dashboard/menu',
       icon: '🍽️',
     },
+    {
+      title: 'Футер',
+      description: 'Управление контактами и ссылками в футере',
+      href: '/admin/dashboard/footer',
+      icon: '🔗',
+    },
   ];
 
   return (
