@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import ImageUpload from '@/components/admin/ImageUpload';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 import { Trash2, Plus } from 'lucide-react';
 
 interface GalleryImage {
@@ -113,7 +113,7 @@ export default function GalleryDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {images.map(image => (
             <div key={image.id} className="bg-white rounded-lg shadow overflow-hidden">
-              <img src={image.image_path} alt="Gallery" className="w-full h-32 object-cover" />
+              <img src={getPublicImageUrl(image.image_path, 'cms-images')} alt="Gallery" className="w-full h-32 object-cover" />
               <div className="p-4">
                 <button
                   onClick={() => handleDeleteImage(image.id)}

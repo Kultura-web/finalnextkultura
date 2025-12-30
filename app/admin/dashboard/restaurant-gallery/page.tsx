@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import ImageUpload from '@/components/admin/ImageUpload';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 import { Trash2, Plus } from 'lucide-react';
 
 interface GalleryImage {
@@ -149,7 +149,7 @@ export default function RestaurantGalleryDashboard() {
             <div key={image.id} className="bg-white rounded-lg shadow overflow-hidden">
               <div className="aspect-video bg-gray-100">
                 <img
-                  src={image.image_path}
+                  src={getPublicImageUrl(image.image_path, 'cms-images')}
                   alt={image.alt_text}
                   className="w-full h-full object-cover"
                 />

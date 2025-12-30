@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import ImageUpload from '@/components/admin/ImageUpload';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
 import { Trash2, Plus } from 'lucide-react';
 
 interface RoomImage {
@@ -214,7 +214,7 @@ export default function RoomsDashboard() {
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                       {room.room_images?.map(img => (
                         <div key={img.id} className="relative group">
-                          <img src={img.image_path} alt="Room" className="w-full h-32 object-cover rounded" />
+                          <img src={getPublicImageUrl(img.image_path, 'cms-images')} alt="Room" className="w-full h-32 object-cover rounded" />
                           <button
                             onClick={() => handleDeleteImage(img.id)}
                             className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition"
