@@ -16,16 +16,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const menuItems = [
     { href: '/admin/dashboard', label: 'Главная' },
-    { href: '/admin/dashboard/hero', label: 'Отель: Героный раздел' },
-    { href: '/admin/dashboard/about', label: 'Отель: О нас' },
-    { href: '/admin/dashboard/rooms', label: 'Отель: Номера' },
-    { href: '/admin/dashboard/offers', label: 'Отель: Предложения' },
-    { href: '/admin/dashboard/gallery', label: 'Отель: Галерея' },
-    { href: '/admin/dashboard/menu', label: 'Отель: Меню' },
-    { href: '/admin/dashboard/restaurant-hero', label: 'Ресторан: Героный раздел' },
-    { href: '/admin/dashboard/restaurant-about', label: 'Ресторан: О нас' },
-    { href: '/admin/dashboard/restaurant-gallery', label: 'Ресторан: Галерея' },
-    { href: '/admin/dashboard/restaurant-reservation', label: 'Ресторан: Бронирование' },
+    { href: '/admin/dashboard/hero', label: 'Героный раздел' },
+    { href: '/admin/dashboard/about', label: 'О нас' },
+    { href: '/admin/dashboard/rooms', label: 'Номера' },
+    { href: '/admin/dashboard/offers', label: 'Предложения' },
+    { href: '/admin/dashboard/menu', label: 'Меню' },
+    { href: '/admin/dashboard/restaurant-gallery', label: 'Галерея' },
+    { href: '/admin/dashboard/restaurant-reservation', label: 'Бронирование' },
     { href: '/admin/dashboard/footer', label: 'Футер' },
   ];
 
