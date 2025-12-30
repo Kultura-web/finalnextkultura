@@ -2,8 +2,10 @@
 
 import { MapPin, Phone, Instagram } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { useContent } from '@/lib/ContentContext';
 
 export default function Contact() {
+  const { contact } = useContent();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +40,7 @@ export default function Contact() {
             }`}
             style={{ transitionDelay: '0.2s' }}
           >
-            Где мы находимся
+            {contact?.title || 'Где мы находимся'}
           </h2>
           <p
             className={`text-gray-600 text-base md:text-lg mt-6 max-w-2xl transform transition-all duration-1000 ${
@@ -46,7 +48,7 @@ export default function Contact() {
             }`}
             style={{ transitionDelay: '0.4s' }}
           >
-            В самом сердце исторического Гродно, на улице Советская
+            {contact?.subtitle || 'В самом сердце исторического Гродно, на улице Советская'}
           </p>
         </div>
 
@@ -65,8 +67,8 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">АДРЕС</h4>
                   <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                    г. Гродно, ул. Советская, 3<br />
-                    Беларусь
+                    {contact?.address_line1 || 'г. Гродно, ул. Советская, 3'}<br />
+                    {contact?.address_line2 || 'Беларусь'}
                   </p>
                 </div>
               </div>
@@ -83,13 +85,13 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">ТЕЛЕФОН</h4>
                   <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                    +375 33 342-88-88
+                    {contact?.phone || '+375 33 342-88-88'}
                   </p>
                 </div>
               </div>
 
               <a
-                href="https://www.instagram.com/boutique_hotel_kultura"
+                href={contact?.instagram_url || 'https://www.instagram.com/boutique_hotel_kultura'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 cursor-pointer transform ${
@@ -103,7 +105,7 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs md:text-sm font-normal text-gray-900 mb-2">INSTAGRAM</h4>
                   <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                    @kultura.cafe.grodno
+                    {contact?.instagram_handle || '@kultura.cafe.grodno'}
                   </p>
                 </div>
               </a>
@@ -118,7 +120,7 @@ export default function Contact() {
           >
             <iframe
               title="Hotel Location"
-              src="https://yandex.ru/map-widget/v1/?text=г.%20Гродно%2C%20ул.%20Советская%2C%203%2C%20Отель%20Cultura&z=17&l=map"
+              src={contact?.map_embed_url || 'https://yandex.ru/map-widget/v1/?text=г.%20Гродно%2C%20ул.%20Советская%2C%203%2C%20Отель%20Cultura&z=17&l=map'}
               width="100%"
               height="100%"
               style={{ border: 0 }}

@@ -10,6 +10,8 @@ import {
   DEFAULT_GALLERY,
   DEFAULT_ABOUT,
   DEFAULT_FOOTER,
+  DEFAULT_NAVBAR,
+  DEFAULT_CONTACT,
 } from './defaults/content';
 
 interface ContentContextType {
@@ -21,6 +23,8 @@ interface ContentContextType {
   about: any;
   restaurant: any;
   footer: any;
+  navbar: any;
+  contact: any;
   isLoading: boolean;
 }
 
@@ -99,6 +103,24 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const fetchNavbar = useCallback(async () => {
+    try {
+      return await contentService.fetchNavbar();
+    } catch (err) {
+      console.error('Error fetching navbar:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchContact = useCallback(async () => {
+    try {
+      return await contentService.fetchContactInfo();
+    } catch (err) {
+      console.error('Error fetching contact:', err);
+      return null;
+    }
+  }, []);
+
   const hero = useAsyncContent({
     defaultValue: DEFAULT_HERO,
     fetchFn: fetchHero,
@@ -139,6 +161,16 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     fetchFn: fetchFooter,
   });
 
+  const navbar = useAsyncContent({
+    defaultValue: DEFAULT_NAVBAR,
+    fetchFn: fetchNavbar,
+  });
+
+  const contact = useAsyncContent({
+    defaultValue: DEFAULT_CONTACT,
+    fetchFn: fetchContact,
+  });
+
   const isLoading =
     hero.isLoading ||
     rooms.isLoading ||
@@ -147,7 +179,9 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     menuItems.isLoading ||
     about.isLoading ||
     restaurant.isLoading ||
-    footer.isLoading;
+    footer.isLoading ||
+    navbar.isLoading ||
+    contact.isLoading;
 
   return (
     <ContentContext.Provider
@@ -160,6 +194,8 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
         about: about.data,
         restaurant: restaurant.data,
         footer: footer.data,
+        navbar: navbar.data,
+        contact: contact.data,
         isLoading,
       }}
     >
