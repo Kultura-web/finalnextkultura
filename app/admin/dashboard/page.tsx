@@ -67,6 +67,18 @@ export default function AdminDashboard() {
 
   const generalSections = [
     {
+      title: 'Навигация',
+      description: 'Управление логотипом и телефонами в шапке',
+      href: '/admin/dashboard/navbar',
+      icon: '🧭',
+    },
+    {
+      title: 'Контакты',
+      description: 'Управление адресом и контактной информацией',
+      href: '/admin/dashboard/contact',
+      icon: '📍',
+    },
+    {
       title: 'Футер',
       description: 'Управление контактами и ссылками в футере',
       href: '/admin/dashboard/footer',
