@@ -10,7 +10,11 @@ export default function Rooms() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>(() => rooms.map(() => 0));
+  const [currentImageIndexes, setCurrentImageIndexes] = useState<number[]>([]);
+
+  useEffect(() => {
+    setCurrentImageIndexes(rooms.map(() => 0));
+  }, [rooms]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -86,7 +90,8 @@ export default function Rooms() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {rooms.map((room, index) => {
             const roomImages = room.room_images || [];
-            const currentImage = roomImages[currentImageIndexes[index]]?.image_path || '';
+            const currentIdx = currentImageIndexes[index] || 0;
+            const currentImage = roomImages[currentIdx]?.image_path || roomImages[0]?.image_path || '';
 
             return (
               <div
@@ -97,12 +102,14 @@ export default function Rooms() {
                 style={{ transitionDelay: `${0.6 + index * 0.2}s` }}
               >
                 <div className="relative h-[300px] md:h-[500px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                  <img
-                    src={currentImage}
-                    alt={`${room.title} ${currentImageIndexes[index] + 1}`}
-                    className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
-                    onClick={() => setFullscreenImage(currentImage)}
-                  />
+                  {currentImage && (
+                    <img
+                      src={currentImage}
+                      alt={`${room.title} ${currentIdx + 1}`}
+                      className="w-full h-full object-cover cursor-pointer transition-all duration-500 group-hover:scale-110 group-hover:translate-x-2"
+                      onClick={() => setFullscreenImage(currentImage)}
+                    />
+                  )}
 
                   <div className="absolute inset-0 bg-black/15 group-hover:bg-black/25 transition-all duration-500"></div>
 
@@ -127,7 +134,7 @@ export default function Rooms() {
                             key={i}
                             onClick={() => jumpTo(index, i)}
                             className={`w-2 h-2 rounded-full transition-all ${
-                              currentImageIndexes[index] === i ? 'bg-white scale-125' : 'bg-white/60'
+                              currentIdx === i ? 'bg-white scale-125' : 'bg-white/60'
                             }`}
                           />
                         ))}
