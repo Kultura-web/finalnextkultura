@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { fetchRestaurantHero } from '@/lib/contentService';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 const defaultContent = {
   title: 'Ресторан Культура',
@@ -26,7 +27,7 @@ export default function RestaurantHero() {
     <section id="home" className="relative h-screen flex items-end overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={content.background_image_path}
+          src={getPublicImageUrl(content.background_image_path, 'cms-images')}
           alt="Restaurant"
           loading="eager"
           fetchPriority="high"

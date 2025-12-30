@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { UtensilsCrossed, Wine, ChefHat } from 'lucide-react';
 import { fetchRestaurantAbout, fetchRestaurantAboutFeatures } from '@/lib/contentService';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 const defaultContent = {
   title: 'Гастрономическое путешествие',
@@ -102,7 +103,7 @@ export default function RestaurantAbout() {
             }`}
           >
             <img
-              src={content.image_path}
+              src={getPublicImageUrl(content.image_path, 'cms-images')}
               alt="Restaurant Interior"
               className="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-700"
             />

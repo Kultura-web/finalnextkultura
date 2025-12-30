@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { fetchRestaurantGalleryImages } from '@/lib/contentService';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 const defaultImages = [
   {
@@ -95,7 +96,7 @@ export default function RestaurantGallery() {
               style={{ transitionDelay: `${0.4 + index * 0.1}s` }}
             >
               <img
-                src={image.image_path}
+                src={getPublicImageUrl(image.image_path, 'cms-images')}
                 alt={image.alt_text}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
