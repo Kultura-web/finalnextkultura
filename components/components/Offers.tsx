@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import BookingModal from './BookingModal';
 import { useContent } from '@/lib/ContentContext';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 export default function Offers() {
   const { offers } = useContent();
@@ -94,7 +95,7 @@ export default function Offers() {
               >
                 <div className="relative h-[300px] md:h-[600px] overflow-hidden mb-6 md:mb-8 transform transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                   <img
-                    src={currentImage}
+                    src={getPublicImageUrl(currentImage, 'cms-images')}
                     alt={offer.title}
                     className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-1 transition-all duration-[2000ms]"
                   />
