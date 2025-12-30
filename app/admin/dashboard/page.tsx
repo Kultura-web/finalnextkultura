@@ -29,12 +29,7 @@ export default function AdminDashboard() {
       href: '/admin/dashboard/offers',
       icon: '🎁',
     },
-    {
-      title: 'Галерея',
-      description: 'Управление галереей изображений',
-      href: '/admin/dashboard/gallery',
-      icon: '📸',
-    },
+
   ];
 
   const restaurantSections = [
