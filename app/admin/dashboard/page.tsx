@@ -29,6 +29,12 @@ export default function AdminDashboard() {
       href: '/admin/dashboard/offers',
       icon: '🎁',
     },
+        {
+      title: 'Контакты',
+      description: 'Управление адресом и контактной информацией',
+      href: '/admin/dashboard/contact',
+      icon: '📍',
+    },
 
   ];
 
@@ -72,12 +78,7 @@ export default function AdminDashboard() {
       href: '/admin/dashboard/navbar',
       icon: '🧭',
     },
-    {
-      title: 'Контакты',
-      description: 'Управление адресом и контактной информацией',
-      href: '/admin/dashboard/contact',
-      icon: '📍',
-    },
+
     {
       title: 'Футер',
       description: 'Управление контактами и ссылками в футере',
