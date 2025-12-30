@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAsyncContent } from './hooks/useAsyncContent';
 import * as contentService from './contentService';
 import {
@@ -27,44 +27,116 @@ interface ContentContextType {
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
+  const fetchHero = useCallback(async () => {
+    try {
+      return await contentService.fetchHeroSection();
+    } catch (err) {
+      console.error('Error fetching hero:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchRooms = useCallback(async () => {
+    try {
+      return await contentService.fetchRoomsWithImages();
+    } catch (err) {
+      console.error('Error fetching rooms:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchOffers = useCallback(async () => {
+    try {
+      return await contentService.fetchOffersWithImages();
+    } catch (err) {
+      console.error('Error fetching offers:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchGallery = useCallback(async () => {
+    try {
+      return await contentService.fetchGalleryImages();
+    } catch (err) {
+      console.error('Error fetching gallery:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchMenu = useCallback(async () => {
+    try {
+      return await contentService.fetchMenuItems();
+    } catch (err) {
+      console.error('Error fetching menu:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchAbout = useCallback(async () => {
+    try {
+      return await contentService.fetchAboutSection();
+    } catch (err) {
+      console.error('Error fetching about:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchRestaurant = useCallback(async () => {
+    try {
+      return await contentService.fetchRestaurantSection();
+    } catch (err) {
+      console.error('Error fetching restaurant:', err);
+      return null;
+    }
+  }, []);
+
+  const fetchFooter = useCallback(async () => {
+    try {
+      return await contentService.fetchFooter();
+    } catch (err) {
+      console.error('Error fetching footer:', err);
+      return null;
+    }
+  }, []);
+
   const hero = useAsyncContent({
     defaultValue: DEFAULT_HERO,
-    fetchFn: () => contentService.fetchHeroSection().catch(() => null),
+    fetchFn: fetchHero,
   });
 
   const rooms = useAsyncContent({
     defaultValue: DEFAULT_ROOMS,
-    fetchFn: () => contentService.fetchRoomsWithImages().catch(() => null),
+    fetchFn: fetchRooms,
   });
 
   const offers = useAsyncContent({
     defaultValue: DEFAULT_OFFERS,
-    fetchFn: () => contentService.fetchOffersWithImages().catch(() => null),
+    fetchFn: fetchOffers,
   });
 
   const gallery = useAsyncContent({
     defaultValue: DEFAULT_GALLERY,
-    fetchFn: () => contentService.fetchGalleryImages().catch(() => null),
+    fetchFn: fetchGallery,
   });
 
   const menuItems = useAsyncContent({
     defaultValue: [],
-    fetchFn: () => contentService.fetchMenuItems().catch(() => null),
+    fetchFn: fetchMenu,
   });
 
   const about = useAsyncContent({
     defaultValue: DEFAULT_ABOUT,
-    fetchFn: () => contentService.fetchAboutSection().catch(() => null),
+    fetchFn: fetchAbout,
   });
 
   const restaurant = useAsyncContent({
     defaultValue: {},
-    fetchFn: () => contentService.fetchRestaurantSection().catch(() => null),
+    fetchFn: fetchRestaurant,
   });
 
   const footer = useAsyncContent({
     defaultValue: DEFAULT_FOOTER,
-    fetchFn: () => contentService.fetchFooter().catch(() => null),
+    fetchFn: fetchFooter,
   });
 
   const isLoading =
