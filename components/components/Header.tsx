@@ -2,10 +2,11 @@
 
 import { Menu, X, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useContent } from '@/lib/ContentContext';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 export default function Header() {
   const { navbar } = useContent();
@@ -18,6 +19,14 @@ export default function Header() {
   }
 
   const isRestaurant = pathname === '/restaurant';
+
+  const logoUrl = useMemo(() => {
+    if (!navbar?.logo_url) return '/logo-no-bg.png';
+    if (navbar.logo_url.startsWith('/') && !navbar.logo_url.includes('cms-images')) {
+      return navbar.logo_url;
+    }
+    return getPublicImageUrl(navbar.logo_url, 'cms-images');
+  }, [navbar?.logo_url]);
 
   /**
    * Scroll to an element id on the appropriate page.
@@ -78,7 +87,7 @@ export default function Header() {
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex-shrink-0 flex flex-row items-center gap-3">
               <Image
-              src={navbar?.logo_url || '/logo-no-bg.png'}
+              src={logoUrl}
                alt="logo"
                width={80}
                height={80}

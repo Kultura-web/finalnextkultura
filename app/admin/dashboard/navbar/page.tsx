@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { supabase } from '@/lib/supabase';
+import { supabase, getPublicImageUrl } from '@/lib/supabase';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 interface Navbar {
   id: string;
@@ -128,15 +129,17 @@ export default function NavbarDashboard() {
             </div>
 
             <div>
-              <label className="block text-gray-900 font-medium mb-2">URL логотипа</label>
-              <input
-                type="text"
-                value={editForm.logo_url || ''}
-                onChange={(e) => setEditForm({...editForm, logo_url: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-gray-900"
-                placeholder="/logo-no-bg.png"
+              <label className="block text-gray-900 font-medium mb-2">Логотип</label>
+              <ImageUpload
+                onImageUpload={(path) => setEditForm({...editForm, logo_url: path})}
+                bucket="cms-images"
+                preview={editForm.logo_url}
               />
-              <p className="text-sm text-gray-500 mt-1">Путь к файлу логотипа в папке public</p>
+              {editForm.logo_url && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Текущий логотип: {editForm.logo_url}
+                </p>
+              )}
             </div>
 
             <button
