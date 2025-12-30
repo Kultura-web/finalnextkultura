@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import BookingModal from './BookingModal';
 import { useContent } from '@/lib/ContentContext';
+import { getPublicImageUrl } from '@/lib/supabase';
 
 export default function Rooms() {
   const { rooms } = useContent();
@@ -91,7 +92,8 @@ export default function Rooms() {
           {rooms.map((room, index) => {
             const roomImages = room.room_images || [];
             const currentIdx = currentImageIndexes[index] || 0;
-            const currentImage = roomImages[currentIdx]?.image_path || roomImages[0]?.image_path || '';
+            const imagePath = roomImages[currentIdx]?.image_path || roomImages[0]?.image_path || '';
+            const currentImage = getPublicImageUrl(imagePath, 'cms-images');
 
             return (
               <div
