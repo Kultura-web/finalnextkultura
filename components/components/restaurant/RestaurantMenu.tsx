@@ -2,10 +2,28 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { fetchMenuItems } from "@/lib/contentService";
+
+interface MenuItem {
+  id: string;
+  title: string;
+  file_path: string;
+  menu_type: string;
+  display_order: number;
+}
 
 export default function RestaurantMenu() {
   const [isVisible, setIsVisible] = useState(false);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchMenuItems()
+      .then(data => {
+        if (data) setMenuItems(data);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -31,7 +49,7 @@ export default function RestaurantMenu() {
   const handleDownload = (fileName: string) => {
     const link = document.createElement("a");
     link.href = fileName;
-    link.target = "_blank"; // Opens in a new tab/window
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -71,26 +89,15 @@ export default function RestaurantMenu() {
           </h2>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button
-              onClick={() => handleDownload("/.pdf")}
-              className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Основное меню
-            </button>
-
-            <button
-              onClick={() => handleDownload("/Menu2.pdf")}
-              className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Детское меню
-            </button>
-
-            <button
-              onClick={() => handleDownload("/Menu1.pdf")}
-              className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Напитки
-            </button>
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleDownload(item.file_path)}
+                className="px-6 py-2 text-sm border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
+              >
+                {item.title}
+              </button>
+            ))}
           </div>
         </div>
       </div>

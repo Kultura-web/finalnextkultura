@@ -2,18 +2,39 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Clock, Users, Calendar, Phone } from 'lucide-react';
+import { fetchRestaurantReservationInfo } from '@/lib/contentService';
+
+const defaultContent = {
+  title: 'Бронирование',
+  subtitle: 'Забронируйте столик и насладитесь незабываемым вечером',
+  hours_label: 'ЧАСЫ РАБОТЫ',
+  hours_text: 'Вс-Чт: 08:00 — 24:00\nПт-Сб: 08:00 — 01:00',
+  phone_label: 'ТЕЛЕФОН',
+  phone_number: '+375 33 388-54-54',
+  capacity_label: 'ВМЕСТИМОСТЬ',
+  capacity_text: 'До 30 гостей\nВозможность проведения мероприятий',
+  form_title: 'Забронировать столик'
+};
 
 export default function RestaurantReservation() {
   const [isVisible, setIsVisible] = useState(false);
+  const [content, setContent] = useState(defaultContent);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Form state
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [guests, setGuests] = useState('1 гость');
   const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    fetchRestaurantReservationInfo()
+      .then(data => {
+        if (data) setContent(data);
+      })
+      .catch(console.error);
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -83,7 +104,7 @@ export default function RestaurantReservation() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }` }
             >
-              Бронирование
+              {content.title}
             </h2>
 
             <p
@@ -92,12 +113,11 @@ export default function RestaurantReservation() {
               }`}
               style={{ transitionDelay: '0.2s' }}
             >
-              Забронируйте столик и насладитесь незабываемым вечером
+              {content.subtitle}
             </p>
 
             <div className="space-y-8">
 
-              {/* Hours */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -108,15 +128,13 @@ export default function RestaurantReservation() {
                   <Clock className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-normal text-gray-900 mb-2">ЧАСЫ РАБОТЫ</h4>
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    Вс-Чт: 08:00 — 24:00<br />
-                    Пт-Сб: 08:00 — 01:00
+                  <h4 className="text-sm font-normal text-gray-900 mb-2">{content.hours_label}</h4>
+                  <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
+                    {content.hours_text}
                   </p>
                 </div>
               </div>
 
-              {/* Phone */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -127,17 +145,16 @@ export default function RestaurantReservation() {
                   <Phone className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-normal text-gray-900 mb-2">ТЕЛЕФОН</h4>
+                  <h4 className="text-sm font-normal text-gray-900 mb-2">{content.phone_label}</h4>
                   <a
-                    href="tel:+375333428888"
+                    href={`tel:${content.phone_number}`}
                     className="text-gray-700 text-lg leading-relaxed hover:text-neutral-900 transition-colors"
                   >
-                    +375 33 388-54-54
+                    {content.phone_number}
                   </a>
                 </div>
               </div>
 
-              {/* Capacity */}
               <div
                 className={`flex items-start gap-6 group hover:translate-x-4 transition-all duration-500 transform ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -148,10 +165,9 @@ export default function RestaurantReservation() {
                   <Users className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-normal text-gray-900 mb-2">ВМЕСТИМОСТЬ</h4>
-                  <p className="text-gray-700 text-lg leading-relaxed">
-                    До 30 гостей<br />
-                    Возможность проведения мероприятий
+                  <h4 className="text-sm font-normal text-gray-900 mb-2">{content.capacity_label}</h4>
+                  <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-line">
+                    {content.capacity_text}
                   </p>
                 </div>
               </div>
@@ -159,7 +175,6 @@ export default function RestaurantReservation() {
             </div>
           </div>
 
-          {/* Form column */}
           <div
             className={`bg-[#dedbd6] p-10 transform transition-all duration-1000 hover:shadow-2xl ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -167,7 +182,7 @@ export default function RestaurantReservation() {
             style={{ transitionDelay: '0.5s' }}
           >
             <h3 className="text-2xl font-light text-gray-900 mb-8">
-              Забронировать столик
+              {content.form_title}
             </h3>
 
             <form className="space-y-6" onSubmit={handleSubmit}>

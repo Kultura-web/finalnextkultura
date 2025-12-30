@@ -79,3 +79,53 @@ export async function fetchFooter() {
   if (error) throw error;
   return data;
 }
+
+export async function fetchRestaurantHero() {
+  const { data, error } = await supabase
+    .from('restaurant_hero')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchRestaurantAbout() {
+  const { data, error } = await supabase
+    .from('restaurant_about')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchRestaurantAboutFeatures() {
+  const { data, error } = await supabase
+    .from('restaurant_about_features')
+    .select('*')
+    .order('display_order');
+
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchRestaurantGalleryImages() {
+  const { data, error } = await supabase
+    .from('restaurant_gallery_images')
+    .select('*')
+    .order('display_order');
+
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchRestaurantReservationInfo() {
+  const { data, error } = await supabase
+    .from('restaurant_reservation_info')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}

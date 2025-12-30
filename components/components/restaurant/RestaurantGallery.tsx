@@ -1,10 +1,47 @@
 "use client"
 
 import { useEffect, useRef, useState } from 'react';
+import { fetchRestaurantGalleryImages } from '@/lib/contentService';
+
+const defaultImages = [
+  {
+    image_path: '/NewReso/resto1.jpg',
+    alt_text: 'Английский завтрак с глазуньей'
+  },
+  {
+    image_path: '/NewReso/resto2.jpg',
+    alt_text: 'Брускетты с сёмгой'
+  },
+  {
+    image_path: '/NewReso/resto3.jpg',
+    alt_text: 'Салат с мандарином'
+  },
+  {
+    image_path: '/NewReso/resto4.jpg',
+    alt_text: 'Говядина с клюквенным соусом'
+  },
+  {
+    image_path: '/NewReso/resto5.jpg',
+    alt_text: 'Больше чем шу'
+  },
+  {
+    image_path: '/NewReso/resto6.jpg',
+    alt_text: 'Рамен с цыпленком'
+  }
+];
 
 export default function RestaurantGallery() {
   const [isVisible, setIsVisible] = useState(false);
+  const [images, setImages] = useState(defaultImages);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchRestaurantGalleryImages()
+      .then(data => {
+        if (data && data.length > 0) setImages(data);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,33 +63,6 @@ export default function RestaurantGallery() {
       }
     };
   }, []);
-
-  const images = [
-    {
-      url: '/NewReso/resto1.jpg',
-      alt: 'Английский завтрак с глазуньей'
-    },
-    {
-      url: '/NewReso/resto2.jpg',
-      alt: 'Брускетты с сёмгой'
-    },
-    {
-      url: '/NewReso/resto3.jpg',
-      alt: 'Салат с мандарином'
-    },
-    {
-      url: '/NewReso/resto4.jpg',
-      alt: 'Говядина с клюквенным соусом'
-    },
-    {
-      url: '/NewReso/resto5.jpg',
-      alt: 'Больше чем шу'
-    },
-    {
-      url: '/NewReso/resto6.jpg',
-      alt: 'Рамен с цыпленком'
-    }
-  ];
 
   return (
     <section className="py-32 bg-[#e8e5e0]" ref={sectionRef}>
@@ -85,8 +95,8 @@ export default function RestaurantGallery() {
               style={{ transitionDelay: `${0.4 + index * 0.1}s` }}
             >
               <img
-                src={image.url}
-                alt={image.alt}
+                src={image.image_path}
+                alt={image.alt_text}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-500"></div>
