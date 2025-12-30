@@ -32,7 +32,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
+              <Link href="/admin/dashboard">
               <h1 className="text-xl font-bold">Панель управления</h1>
+              </Link>
               <div className="hidden md:flex space-x-4">
                 {menuItems.map(item => (
                   <Link
