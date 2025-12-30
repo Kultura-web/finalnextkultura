@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
@@ -8,10 +8,28 @@ import { supabase } from '@/lib/supabase';
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        router.replace('/admin/login');
+        return;
+      }
+
+      setCheckingAuth(false);
+    };
+
+    checkAuth();
+  }, [router]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push('/admin/login');
+    router.replace('/admin/login');
   };
 
   const menuItems = [
@@ -26,6 +44,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: '/admin/dashboard/footer', label: 'Футер' },
   ];
 
+  // ⛔ Block rendering until auth is verified
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-gray-600">Checking authentication...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-gray-900 text-white">
@@ -33,7 +60,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <Link href="/admin/dashboard">
-              <h1 className="text-xl font-bold">Панель управления</h1>
+                <h1 className="text-xl font-bold">Панель управления</h1>
               </Link>
               <div className="hidden md:flex space-x-4">
                 {menuItems.map(item => (
