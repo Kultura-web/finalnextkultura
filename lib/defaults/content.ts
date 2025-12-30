@@ -158,3 +158,23 @@ export const DEFAULT_FOOTER = {
   facebook_url: 'https://facebook.com/kulturahotel',
   instagram_url: 'https://instagram.com/kulturahotel',
 };
+
+export const DEFAULT_NAVBAR = {
+  id: 'default',
+  hotel_name: 'ОТЕЛЬ КУЛЬТУРА',
+  hotel_phone: '+375 33 342-88-88',
+  restaurant_phone: '+375 33 388-54-54',
+  logo_url: '/logo-no-bg.png',
+};
+
+export const DEFAULT_CONTACT = {
+  id: 'default',
+  title: 'Где мы находимся',
+  subtitle: 'В самом сердце исторического Гродно, на улице Советская',
+  address_line1: 'г. Гродно, ул. Советская, 3',
+  address_line2: 'Беларусь',
+  phone: '+375 33 342-88-88',
+  instagram_handle: '@kultura.cafe.grodno',
+  instagram_url: 'https://www.instagram.com/boutique_hotel_kultura',
+  map_embed_url: 'https://yandex.ru/map-widget/v1/?text=г.%20Гродно%2C%20ул.%20Советская%2C%203%2C%20Отель%20Cultura&z=17&l=map',
+};

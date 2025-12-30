@@ -129,3 +129,23 @@ export async function fetchRestaurantReservationInfo() {
   if (error) throw error;
   return data;
 }
+
+export async function fetchNavbar() {
+  const { data, error } = await supabase
+    .from('navbar')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchContactInfo() {
+  const { data, error } = await supabase
+    .from('contact_info')
+    .select('*')
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}

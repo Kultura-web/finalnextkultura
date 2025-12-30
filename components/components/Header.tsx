@@ -5,12 +5,10 @@ import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useContent } from '@/lib/ContentContext';
 
 export default function Header() {
-  
-  // Hide header on any route starting with /admin
-
-  
+  const { navbar } = useContent();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname() ?? '/';
   const router = useRouter();
@@ -80,13 +78,13 @@ export default function Header() {
           <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex-shrink-0 flex flex-row items-center gap-3">
               <Image
-              src="/logo-no-bg.png"
+              src={navbar?.logo_url || '/logo-no-bg.png'}
                alt="logo"
                width={80}
                height={80}
                />
               <h1 className="text-lg md:text-2xl font-light text-gray-900 hover:text-neutral-600 transition-colors duration-300">
-                ОТЕЛЬ КУЛЬТУРА
+                {navbar?.hotel_name || 'ОТЕЛЬ КУЛЬТУРА'}
               </h1>
             </Link>
             <Link
@@ -152,11 +150,11 @@ export default function Header() {
 
           <div className="hidden md:flex items-center space-x-4">
             <a
-              href="tel:+375333428888"
+              href={`tel:${isRestaurant ? navbar?.restaurant_phone?.replace(/[^0-9+]/g, '') : navbar?.hotel_phone?.replace(/[^0-9+]/g, '')}`}
               className="flex items-center text-sm text-gray-700 hover:text-gray-900 transition-all duration-300 hover:scale-105"
             >
               <Phone className="w-4 h-4 mr-2" />
-              {isRestaurant ? "+375 33 388-54-54" : "+375 33 342-88-88" }
+              {isRestaurant ? (navbar?.restaurant_phone || "+375 33 388-54-54") : (navbar?.hotel_phone || "+375 33 342-88-88")}
             </a>
             {!isRestaurant && (
               <button
@@ -226,9 +224,9 @@ export default function Header() {
                 </>
               )}
             </div>
-            <a href="tel:+375333428888" className="flex items-center py-2 text-sm text-gray-700">
+            <a href={`tel:${navbar?.hotel_phone?.replace(/[^0-9+]/g, '')}`} className="flex items-center py-2 text-sm text-gray-700">
               <Phone className="w-4 h-4 mr-2" />
-              +375 33 342-88-88
+              {navbar?.hotel_phone || '+375 33 342-88-88'}
             </a>
             {!isRestaurant && (
               <button
